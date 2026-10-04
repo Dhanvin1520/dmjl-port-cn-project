@@ -17,11 +17,11 @@ app.dmjl.test. 30 IN A 10.7.21.15
 ;; WHEN: Sun Oct 04 15:39:23 IST 2026
 ;; MSG SIZE  rcvd: 58
 
-PING 10.7.3.17 (10.7.3.17): 56 data bytes
-64 bytes from 10.7.3.17: icmp_seq=0 ttl=64 time=37.150 ms
-64 bytes from 10.7.3.17: icmp_seq=1 ttl=64 time=56.497 ms
-64 bytes from 10.7.3.17: icmp_seq=2 ttl=64 time=75.708 ms
+PING app.dmjl.test (10.7.21.15): 56 data bytes
+64 bytes from 10.7.21.15: icmp_seq=0 ttl=63 time=41.801 ms
+64 bytes from 10.7.21.15: icmp_seq=1 ttl=63 time=17.030 ms
+64 bytes from 10.7.21.15: icmp_seq=2 ttl=63 time=11.342 ms
 
---- 10.7.3.17 ping statistics ---
+--- app.dmjl.test ping statistics ---
 3 packets transmitted, 3 packets received, 0.0% packet loss
-round-trip min/avg/max/stddev = 37.150/56.451/75.708/15.741 ms
+round-trip min/avg/max/stddev = 11.342/23.391/41.801/13.223 ms
