@@ -1,0 +1,6 @@
+=== Mac 3: MacBook Pro ===
+  interface: en0
+IP: 10.7.3.17
+Mask: 255.255.224.0
+Gateway: 10.7.0.1
+	ether 36:0e:62:54:af:03
