@@ -1,0 +1,57 @@
+# Wireshark Deep Packet Inspection (DPI) & Protocol Traces
+
+> **Capture Node:** Mac 3 (`10.7.3.17`)  
+> **Interface:** `en0` (Physical Wi-Fi LAN)  
+> **Trace File:** [`dmjl_phase1_capture.pcapng`](dmjl_phase1_capture.pcapng)  
+> **Capture Lead:** Chaitanya Sai Meka ([@ChaitanyaSai-Meka](https://github.com/ChaitanyaSai-Meka))  
+
+---
+
+## 📑 Packet Capture Inventory
+
+| Artifact | Wireshark Display Filter | Protocol Layer | Description |
+|---|---|---|---|
+| [`C1_dns.png`](C1_dns.png) | `dns.qry.name == "app.dmjl.test"` | Application (UDP 53) | Private DNS query and authoritative A-record answer pointing to `10.7.21.15`. |
+| [`C2_tcp.png`](C2_tcp.png) | `ip.addr == 10.7.21.15 && tcp.port == 443` | Transport (TCP 443) | Standard 3-way handshake (`[SYN]`, `[SYN, ACK]`, `[ACK]`) before TLS negotiation. |
+| [`C3_tls.png`](C3_tls.png) | `ip.addr == 10.7.21.15 && tls` | Presentation (TLS 1.3) | Client Hello cipher suites and Server Hello handshake establishment. |
+| [`C3_cert.png`](C3_cert.png) | `tls.handshake.type == 11` | Security (X.509) | Server certificate payload presenting `CN=app.dmjl.test` issued by local CA. |
+| [`C_bonus_http.png`](C_bonus_http.png) | `http && tcp.port == 3001` | Application (HTTP/1.0) | **🌟 BONUS PROOF:** Unencrypted HTTP traffic from Edge to Backend, proving TLS termination. |
+
+---
+
+## 📸 Visual Inspection Gallery
+
+### 1. DNS Query & Response (`C1_dns.png`)
+- **Query:** Client `10.7.3.17:51432` sends UDP query for `app.dmjl.test` to private resolver `10.7.7.61:53` (Transaction ID `0x2e41`).
+- **Answer:** Resolver returns `10.7.21.15` with TTL 30s.
+![C1 DNS Query and Response](C1_dns.png)
+
+---
+
+### 2. TCP 3-Way Handshake (`C2_tcp.png`)
+- **SYN:** Client (`10.7.3.17:58214`) sends `[SYN]` to Edge (`10.7.21.15:443`) with Seq=0.
+- **SYN-ACK:** Edge responds with `[SYN, ACK]` (Seq=0, Ack=1).
+- **ACK:** Client confirms with `[ACK]` (Seq=1, Ack=1).
+- **Outcome:** Reliable, ordered, connection-oriented channel established before any application data is sent.
+![C2 TCP 3-Way Handshake](C2_tcp.png)
+
+---
+
+### 3. TLS Handshake & Cipher Negotiation (`C3_tls.png`)
+- **Client Hello:** Client offers supported TLS versions (TLS 1.2, TLS 1.3) and cipher suite candidates.
+- **Server Hello:** Edge server selects `TLS_CHACHA20_POLY1305_SHA256` under TLS 1.3.
+- **Confidentiality:** All subsequent application payload (HTTP GET, headers, JSON body) is encapsulated in encrypted Application Data records.
+![C3 TLS Handshake](C3_tls.png)
+
+---
+
+### 4. TLS Certificate Payload (`C3_cert.png`)
+- **Certificate Inspection:** Shows the X.509 server certificate presenting `CN=app.dmjl.test` and signed by `CN=dmjl_port Local CA`.
+![C3 Certificate Inspection](C3_cert.png)
+
+---
+
+### 5. 🌟 Bonus Trace: Reverse Proxy TLS Offloading (`C_bonus_http.png`)
+- **Architecture Validation:** Demonstrates that while client-to-edge traffic is encrypted with TLS 1.3 on port 443, traffic between Nginx (`10.7.21.15`) and Backend A (`10.7.3.17:3001`) is clean, unencrypted HTTP GET traffic.
+- **Proof:** Confirms that TLS terminates strictly at the edge proxy, exactly mirroring enterprise cloud architecture (e.g. AWS ALB to EC2).
+![Bonus Cleartext HTTP Trace](C_bonus_http.png)
