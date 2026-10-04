@@ -21,7 +21,7 @@ All files listed below contain **raw, unedited terminal output and network captu
 | **C3 — Wireshark TLS Handshake & Cipher Suites** | Mac 3 | [`ev_mac3/C3_tls.png`](ev_mac3/C3_tls.png)<br/>[`ev_mac3/C3_cert.png`](ev_mac3/C3_cert.png) | Client Hello cipher suite negotiation, Server Hello chosen parameters, and Certificate packet details (`CN=app.dmjl.test`). |
 | **C_Bonus — Wireshark TLS Offloading Trace** | Mac 3 | [`ev_mac3/C_bonus_http.png`](ev_mac3/C_bonus_http.png) | **BONUS EVIDENCE:** Wireshark inspection on port 3001 proving edge-to-backend communication is unencrypted HTTP, verifying reverse-proxy TLS termination. |
 | **C — Full Raw Packet Capture** | Mac 3 | [`ev_mac3/dmjl_phase1_capture.pcapng`](ev_mac3/dmjl_phase1_capture.pcapng) | Complete pcapng file of all captured traffic during test execution. |
-| **D1 — Caching Headers & Revalidation** | Mac 4 | [`ev_mac4/D1_headers.txt`](ev_mac4/D1_headers.txt)<br/>[`ev_mac4/D1_304.txt`](ev_mac4/D1_304.txt) | Verification of `Cache-Control: public, max-age=60`, `ETag: "status-v1"`, and HTTP 304 Not Modified response upon `If-None-Match`. |
+| **D1 — Caching Headers & Revalidation** | Mac 4 | [`ev_mac4/D1_headers.txt`](ev_mac4/D1_headers.txt)<br/>[`ev_mac4/D1_304.txt`](ev_mac4/D1_304.txt) | Verification of RFC 9111 `Cache-Control: public, max-age=60`, RFC 9110 `ETag: "status-v1"`, and HTTP 304 Not Modified response upon `If-None-Match`. |
 | **D3 — High Availability & Failure Demo** | Mac 4 | [`ev_mac4/D3_before.txt`](ev_mac4/D3_before.txt)<br/>[`ev_mac4/D3_layers.txt`](ev_mac4/D3_layers.txt)<br/>[`ev_mac4/D3_after.txt`](ev_mac4/D3_after.txt)<br/>[`ev_mac4/D3_restored.txt`](ev_mac4/D3_restored.txt) | Demonstrates graceful failover: Backend A shutdown causes automatic 100% traffic reroute to Backend B without client errors, followed by full recovery upon restart. |
 
 ---
@@ -29,25 +29,25 @@ All files listed below contain **raw, unedited terminal output and network captu
 ## 📸 Wireshark Packet Inspection Gallery
 
 ### 1. C1: DNS Query & Response (`dns.qry.name == "app.dmjl.test"`)
-Shows the UDP query from client (`10.7.3.17:51432`) to DNS server (`10.7.7.61:53`) and the A-record response pointing to `10.7.21.15` (TTL 30).
+Shows the UDP query (Frame 134) from client (`10.7.3.17:59955`) to DNS server (`10.7.7.61:53`) and authoritative A-record response (Frame 141) pointing to `10.7.21.15` (Transaction ID `0x205c`, TTL 30s).
 ![C1 DNS Query & Response](ev_mac3/C1_dns.png)
 
 ---
 
 ### 2. C2: TCP 3-Way Handshake (`ip.addr == 10.7.21.15 && tcp.port == 443`)
-Shows the `[SYN]`, `[SYN, ACK]`, and `[ACK]` packet exchange establishing connection-oriented transport.
+Shows the `[SYN]` (Frame 143), `[SYN, ACK]` (Frame 146), and `[ACK]` (Frame 147) packet exchange on socket pair (`10.7.3.17:62924 <-> 10.7.21.15:443`), establishing connection-oriented transport.
 ![C2 TCP Handshake](ev_mac3/C2_tcp.png)
 
 ---
 
 ### 3. C3: TLS Handshake & Cipher Suites (`ip.addr == 10.7.21.15 && tls`)
-Shows Client Hello advertising cipher suites and Server Hello establishing TLS 1.3 encryption.
+Shows Client Hello (Frame 148) advertising cipher suites and Server Hello (Frame 151) establishing TLS 1.3 encryption with `TLS_CHACHA20_POLY1305_SHA256`.
 ![C3 TLS Handshake](ev_mac3/C3_tls.png)
 
 ---
 
 ### 4. C3 (Cert): Certificate Packet Inspection
-Inspects the X.509 certificate payload presenting `CN=app.dmjl.test` issued by `CN=dmjl_port Local CA`.
+Under TLS 1.2 negotiation (Frame 193), inspects the X.509 certificate payload presenting `CN=app.dmjl.test` issued by `CN=dmjl_port Local CA`.
 ![C3 Certificate](ev_mac3/C3_cert.png)
 
 ---
