@@ -1,0 +1,20 @@
+
+; <<>> DiG 9.10.6 <<>> app.dmjl.test
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 46060
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;app.dmjl.test.			IN	A
+
+;; ANSWER SECTION:
+app.dmjl.test.		30	IN	A	10.7.21.15
+
+;; Query time: 12 msec
+;; SERVER: 10.7.7.61#53(10.7.7.61)
+;; WHEN: Sun Oct 04 15:16:07 IST 2026
+;; MSG SIZE  rcvd: 58
+

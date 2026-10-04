@@ -1,0 +1,30 @@
+--- request 1
+HTTP/1.1 200 OK
+X-Backend: A
+{"backend": "A", "status": "ok"}
+
+--- request 2
+HTTP/1.1 200 OK
+X-Backend: B
+{"backend": "B", "status": "ok"}
+
+--- request 3
+HTTP/1.1 200 OK
+X-Backend: A
+{"backend": "A", "status": "ok"}
+
+--- request 4
+HTTP/1.1 200 OK
+X-Backend: B
+{"backend": "B", "status": "ok"}
+
+--- request 5
+HTTP/1.1 200 OK
+X-Backend: A
+{"backend": "A", "status": "ok"}
+
+--- request 6
+HTTP/1.1 200 OK
+X-Backend: B
+{"backend": "B", "status": "ok"}
+

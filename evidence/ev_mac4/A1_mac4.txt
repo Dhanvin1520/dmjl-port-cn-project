@@ -1,0 +1,6 @@
+=== Mac 4: kasula’s MacBook Pro ===
+  interface: en0
+IP: 10.3.2.17
+Mask: 255.255.252.0
+Gateway: 10.3.0.1
+	ether 0a:d0:f3:54:d8:38

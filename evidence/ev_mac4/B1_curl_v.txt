@@ -1,0 +1,52 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0* Host app.dmjl.test:443 was resolved.
+* IPv6: (none)
+* IPv4: 10.7.21.15
+*   Trying 10.7.21.15:443...
+* Connected to app.dmjl.test (10.7.21.15) port 443
+* ALPN: curl offers h2,http/1.1
+* (304) (OUT), TLS handshake, Client hello (1):
+} [318 bytes data]
+*  CAfile: /etc/ssl/cert.pem
+*  CApath: none
+* (304) (IN), TLS handshake, Server hello (2):
+{ [122 bytes data]
+* (304) (IN), TLS handshake, Unknown (8):
+{ [53 bytes data]
+* (304) (IN), TLS handshake, Certificate (11):
+{ [815 bytes data]
+* (304) (IN), TLS handshake, CERT verify (15):
+{ [264 bytes data]
+* (304) (IN), TLS handshake, Finished (20):
+{ [36 bytes data]
+* (304) (OUT), TLS handshake, Finished (20):
+} [36 bytes data]
+* SSL connection using TLSv1.3 / AEAD-CHACHA20-POLY1305-SHA256 / [blank] / UNDEF
+* ALPN: server accepted http/1.1
+* Server certificate:
+*  subject: CN=app.dmjl.test
+*  start date: Oct  4 09:21:39 2026 GMT
+*  expire date: Oct  4 09:21:39 2027 GMT
+*  subjectAltName: host "app.dmjl.test" matched cert's "app.dmjl.test"
+*  issuer: CN=dmjl_port Local CA
+*  SSL certificate verify ok.
+* using HTTP/1.x
+> GET / HTTP/1.1
+> Host: app.dmjl.test
+> User-Agent: curl/8.7.1
+> Accept: */*
+> 
+* Request completely sent off
+< HTTP/1.1 200 OK
+< Server: nginx/1.31.6
+< Date: Sun, 04 Oct 2026 09:46:24 GMT
+< Content-Type: application/json
+< Content-Length: 75
+< Connection: keep-alive
+< X-Backend: B
+< 
+{ [75 bytes data]
+100    75  100    75    0     0    386      0 --:--:-- --:--:-- --:--:--   388
+* Connection #0 to host app.dmjl.test left intact
+{"service": "dmjl_port", "backend": "B", "message": "Backend B is running"}
