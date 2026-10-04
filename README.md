@@ -1,6 +1,6 @@
 # dmjl_port — Computer Networks Project (Phase 1: Build & Observe)
 
-A private, enterprise-grade distributed network platform built across **4 physical MacBook Pros on one LAN** (Submission Type 1). 
+A private, distributed network platform built across **4 physical MacBook Pros on one LAN** (Submission Type 1). 
 
 A client resolves `app.dmjl.test` through our authoritative local DNS server, establishes an encrypted TLS 1.3 session with our edge reverse proxy, and is dynamically load-balanced across two independent application backends.
 
