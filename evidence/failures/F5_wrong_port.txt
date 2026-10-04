@@ -1,0 +1,15 @@
+$ curl -v --max-time 5 https://app.dmjl.test:9999
+*   Trying 10.7.21.15:9999...
+* connect to 10.7.21.15 port 9999 failed: Connection refused
+* Failed to connect to app.dmjl.test port 9999 after 12 ms: Couldn't connect to server
+* Closing connection 0
+curl: (7) Failed to connect to app.dmjl.test port 9999 after 12 ms: Couldn't connect to server
+
+$ ping -c 2 10.7.21.15
+PING 10.7.21.15 (10.7.21.15): 56 data bytes
+64 bytes from 10.7.21.15: icmp_seq=0 ttl=64 time=15.112 ms
+64 bytes from 10.7.21.15: icmp_seq=1 ttl=64 time=16.890 ms
+
+--- 10.7.21.15 ping statistics ---
+2 packets transmitted, 2 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 15.112/16.001/16.890/0.889 ms

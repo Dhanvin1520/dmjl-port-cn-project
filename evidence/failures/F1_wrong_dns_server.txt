@@ -1,0 +1,32 @@
+$ dig app.dmjl.test @8.8.8.8
+
+; <<>> DiG 9.10.6 <<>> app.dmjl.test @8.8.8.8
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 48912
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+;; QUESTION SECTION:
+;app.dmjl.test.			IN	A
+
+;; AUTHORITY SECTION:
+.			86399	IN	SOA	a.root-servers.net. nstld.verisign-grs.com. 2026100400 1800 900 604800 86400
+
+;; Query time: 42 msec
+;; SERVER: 8.8.8.8#53(8.8.8.8)
+;; WHEN: Sun Oct 04 15:42:10 IST 2026
+;; MSG SIZE  rcvd: 106
+
+$ curl -sS --max-time 5 https://app.dmjl.test/api/status
+curl: (6) Could not resolve host: app.dmjl.test
+
+$ ping -c 2 10.7.21.15
+PING 10.7.21.15 (10.7.21.15): 56 data bytes
+64 bytes from 10.7.21.15: icmp_seq=0 ttl=64 time=18.421 ms
+64 bytes from 10.7.21.15: icmp_seq=1 ttl=64 time=14.109 ms
+
+--- 10.7.21.15 ping statistics ---
+2 packets transmitted, 2 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 14.109/16.265/18.421/2.156 ms

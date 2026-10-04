@@ -1,0 +1,8 @@
+$ dig app.dmjl.test +short
+10.7.3.17
+
+$ curl -sS --max-time 5 https://app.dmjl.test/api/status
+curl: (7) Failed to connect to app.dmjl.test port 443: Connection refused
+
+$ dig app.dmjl.test +short   (restored dnsmasq mapping)
+10.7.21.15

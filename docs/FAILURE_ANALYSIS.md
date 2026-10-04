@@ -26,16 +26,18 @@ When a failure occurs in a networked distributed system, diagnosis must proceed 
   - `ping 10.7.21.15` (Mac 2 Edge IP): **Succeeds with 0% packet loss!**
 - **Layer Isolation Explanation:**
   Proves that the **DNS Layer (Application Layer / UDP 53)** and **IP Layer (Network Layer / Layer 3)** operate completely independently. Direct IP reachability exists at Layer 3, but the client cannot initiate transport connections without name-to-address resolution.
+- **Evidence File:** [`evidence/failures/F1_wrong_dns_server.txt`](../evidence/failures/F1_wrong_dns_server.txt)
 
 ---
 
 ### Scenario 2: DNS Record Points to a Wrong IP Address
-- **Fault Injection:** In `dnsmasq.conf`, set `address=/app.dmjl.test/10.7.7.199` (an unassigned IP or wrong node).
+- **Fault Injection:** In `dnsmasq.conf`, set `address=/app.dmjl.test/10.7.3.17` (wrong node IP).
 - **Observed Behavior:**
-  - `dig app.dmjl.test`: **Succeeds with `status: NOERROR`**, returning `10.7.7.199`.
-  - `curl https://app.dmjl.test/api/status`: Times out with `curl: (28) Failed to connect to app.dmjl.test port 443: Operation timed out` or `Connection refused`.
+  - `dig app.dmjl.test`: **Succeeds with `status: NOERROR`**, returning `10.7.3.17`.
+  - `curl https://app.dmjl.test/api/status`: Fails with `curl: (7) Failed to connect to app.dmjl.test port 443: Connection refused`.
 - **Layer Isolation Explanation:**
   Proves that **DNS is merely an address directory (mapping layer)**, not an active network connection. A successful DNS lookup provides zero guarantee that the destination host exists, is online, or is listening on the requested port.
+- **Evidence File:** [`evidence/failures/F2_wrong_dns_record.txt`](../evidence/failures/F2_wrong_dns_record.txt)
 
 ---
 
@@ -47,12 +49,13 @@ When a failure occurs in a networked distributed system, diagnosis must proceed 
   - Client curl requests: 100% of repeated requests return `HTTP/1.1 200 OK` exclusively served by `X-Backend: B` ([`D3_after.txt`](../evidence/ev_mac4/D3_after.txt)).
   - Client error rate: **0.0%** (zero failed transactions).
 - **Layer Isolation Explanation:**
-  Nginx acts as a layer-7 reverse proxy with upstream fault tolerance (`max_fails=1 fail_timeout=10s; proxy_next_upstream error timeout http_502;`). When Nginx receives a TCP `RST` (connection refused) from port 3001, it immediately retries the request against Backend B within the same client session.
+  Nginx acts as a layer-7 reverse proxy with upstream fault tolerance (`max_fails=1 fail_timeout=10s;`). By default in Nginx, `proxy_next_upstream` handles `error timeout`. When Nginx receives a TCP `RST` (connection refused) from port 3001, it marks the server temporarily unavailable and immediately retries the request against Backend B within the same client session.
 - **Evidence Files:**
   - Pre-failure balance: [`D3_before.txt`](../evidence/ev_mac4/D3_before.txt)
-  - Lower layers verification: [`D3_layers.txt`](../evidence/ev_mac4/D3_layers.txt)
+  - Lower layers verification (DNS + Mac 3 Ping): [`D3_layers.txt`](../evidence/ev_mac4/D3_layers.txt)
   - Failover state: [`D3_after.txt`](../evidence/ev_mac4/D3_after.txt)
   - Recovery state: [`D3_restored.txt`](../evidence/ev_mac4/D3_restored.txt)
+  - Scenario capture log: [`evidence/failures/F3_one_backend_down.txt`](../evidence/failures/F3_one_backend_down.txt)
 
 ---
 
@@ -68,6 +71,7 @@ When a failure occurs in a networked distributed system, diagnosis must proceed 
   This clearly delineates **where the edge ends and the backend begins**:
   - The Edge reverse proxy is fully operational at Layers 3, 4, 6, and 7.
   - The application backend cluster is unavailable. The edge communicates this upstream failure to the client via RFC 7231 status code `502 Bad Gateway`.
+- **Evidence File:** [`evidence/failures/F4_both_backends_down.txt`](../evidence/failures/F4_both_backends_down.txt)
 
 ---
 
@@ -81,3 +85,5 @@ When a failure occurs in a networked distributed system, diagnosis must proceed 
   Proves that **IP addresses (Network Layer 3)** and **Port numbers (Transport Layer 4)** are distinct identifiers:
   - IP address identifies the physical/virtual host interface on the subnet.
   - Port number identifies the specific operating system socket/process bound to receive traffic.
+- **Evidence File:** [`evidence/failures/F5_wrong_port.txt`](../evidence/failures/F5_wrong_port.txt)
+- **Restoration Evidence:** [`evidence/failures/F_restored.txt`](../evidence/failures/F_restored.txt)

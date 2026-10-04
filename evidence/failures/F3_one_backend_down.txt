@@ -1,0 +1,26 @@
+$ dig app.dmjl.test +short
+10.7.21.15
+
+$ ping -c 3 10.7.3.17   (Mac 3 host, Backend A process stopped)
+PING 10.7.3.17 (10.7.3.17): 56 data bytes
+64 bytes from 10.7.3.17: icmp_seq=0 ttl=64 time=37.150 ms
+64 bytes from 10.7.3.17: icmp_seq=1 ttl=64 time=56.497 ms
+64 bytes from 10.7.3.17: icmp_seq=2 ttl=64 time=75.708 ms
+
+--- 10.7.3.17 ping statistics ---
+3 packets transmitted, 3 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 37.150/56.451/75.708/15.741 ms
+
+$ for i in {1..6}; do curl -si https://app.dmjl.test/api/status | grep -iE '^HTTP|x-backend'; done
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: B

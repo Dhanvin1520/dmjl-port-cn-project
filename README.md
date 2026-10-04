@@ -8,9 +8,9 @@ A client resolves `app.dmjl.test` through our authoritative local DNS server, es
 
 ---
 
-## 📑 Official Phase 1 Deliverables Index
+## 📑 Phase 1 Deliverables Index
 
-To ensure seamless evaluation by human evaluators and automated AI grading workflows, all deliverables specified in **Section 9** and **Section 6** of the Course Project specification are comprehensively documented and linked below:
+All deliverables specified in **Section 9** and **Section 6** of the Course Project specification are documented and linked below:
 
 | Deliverable (Section 9) | Repository Path | Description |
 |---|---|---|
@@ -32,6 +32,24 @@ To ensure seamless evaluation by human evaluators and automated AI grading workf
 | **Mac 2** | **Edge & TLS Proxy** | **Jagruthi Pulumati** | [@Jag2007](https://github.com/Jag2007) | Edge reverse proxy (`nginx`), TLS 1.3 termination, Root CA issuance, video lead |
 | **Mac 3** | **Application Node A** | **Chaitanya Sai Meka** | [@ChaitanyaSai-Meka](https://github.com/ChaitanyaSai-Meka) | Backend A instance (`:3001`), Wireshark deep packet inspection (DPI) & captures |
 | **Mac 4** | **Application Node B & Test Client** | **Kasula Lalithendra** | [@Lalith0024](https://github.com/Lalith0024) | Backend B instance (`:3002`), primary client test suite, telemetry & failover evidence |
+
+---
+
+## 🚀 How to Run the Backends
+
+Python 3 standard library only (zero external package dependencies):
+
+```bash
+# Mac 3 (Node A):
+python3 backend/server.py A 3001
+
+# Mac 4 (Node B):
+python3 backend/server.py B 3002
+```
+
+Both backend instances bind to `0.0.0.0`. Supported endpoints:
+- `GET /` — Base service identification.
+- `GET /api/status` — JSON status payload returning `X-Backend` header and HTTP caching headers (`ETag: "status-v1"`, `Cache-Control: public, max-age=60`).
 
 ---
 

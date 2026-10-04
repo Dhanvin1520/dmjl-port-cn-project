@@ -1,0 +1,8 @@
+$ curl -si https://app.dmjl.test/api/status | head -2
+HTTP/1.1 502 Bad Gateway
+Server: nginx/1.31.6
+
+$ curl -sv https://app.dmjl.test/api/status 2>&1 | grep -E "SSL connection|verify ok|^< HTTP"
+*  SSL connection using TLSv1.3 / AEAD-CHACHA20-POLY1305-SHA256
+*  SSL certificate verify ok.
+< HTTP/1.1 502 Bad Gateway
