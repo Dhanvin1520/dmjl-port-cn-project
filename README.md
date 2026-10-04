@@ -190,6 +190,14 @@ evidence/
     ├── D3_layers.txt              # Verification of DNS & IP layers during backend fault
     ├── D3_after.txt               # Post-failure 100% failover to Backend B
     └── D3_restored.txt            # Post-restoration recovery trace
+wireshark/                         # Dedicated Wireshark DPI Gallery
+├── README.md                      # Comprehensive DPI guide & visual screenshot gallery
+├── dmjl_phase1_capture.pcapng     # Full live raw packet capture
+├── C1_dns.png                     # Wireshark DNS query/response trace
+├── C2_tcp.png                     # Wireshark TCP 3-way handshake (SYN, SYN-ACK, ACK)
+├── C3_tls.png                     # Wireshark TLS Client/Server Hello & Cipher Suites
+├── C3_cert.png                    # Wireshark TLS Certificate packet inspection
+└── C_bonus_http.png               # BONUS: Plaintext HTTP trace between edge & backend
 ```
 
 ---
