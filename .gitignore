@@ -11,3 +11,7 @@ Thumbs.db
 # Project local artifacts & chat files
 teamchat/
 resources/
+
+# Python cache
+__pycache__/
+*.pyc

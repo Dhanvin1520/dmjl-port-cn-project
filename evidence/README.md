@@ -23,3 +23,8 @@ All files listed below contain **raw, unedited terminal output and network captu
 | **C — Full Raw Packet Capture** | Mac 3 | [`ev_mac3/dmjl_phase1_capture.pcapng`](ev_mac3/dmjl_phase1_capture.pcapng) | Complete pcapng file of all captured traffic during test execution. |
 | **D1 — Caching Headers & Revalidation** | Mac 4 | [`ev_mac4/D1_headers.txt`](ev_mac4/D1_headers.txt)<br/>[`ev_mac4/D1_304.txt`](ev_mac4/D1_304.txt) | Verification of `Cache-Control: public, max-age=60`, `ETag: "status-v1"`, and HTTP 304 Not Modified response upon `If-None-Match`. |
 | **D3 — High Availability & Failure Demo** | Mac 4 | [`ev_mac4/D3_before.txt`](ev_mac4/D3_before.txt)<br/>[`ev_mac4/D3_layers.txt`](ev_mac4/D3_layers.txt)<br/>[`ev_mac4/D3_after.txt`](ev_mac4/D3_after.txt)<br/>[`ev_mac4/D3_restored.txt`](ev_mac4/D3_restored.txt) | Demonstrates graceful failover: Backend A shutdown causes automatic 100% traffic reroute to Backend B without client errors, followed by full recovery upon restart. |
+
+---
+
+> 📖 **Comprehensive Failure Scenarios Analysis:**  
+> For an in-depth diagnostic breakdown of all 5 mandatory failure scenarios specified in Section 6.3 of the Course Project specification, see [**`docs/FAILURE_ANALYSIS.md`**](../docs/FAILURE_ANALYSIS.md).

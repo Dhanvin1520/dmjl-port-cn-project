@@ -8,6 +8,22 @@ A client resolves `app.dmjl.test` through our authoritative local DNS server, es
 
 ---
 
+## 📑 Official Phase 1 Deliverables Index
+
+To ensure seamless evaluation by human evaluators and automated AI grading workflows, all deliverables specified in **Section 9** and **Section 6** of the Course Project specification are comprehensively documented and linked below:
+
+| Deliverable (Section 9) | Repository Path | Description |
+|---|---|---|
+| **Architecture Document** | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Network topology, IP/service inventory, request sequence diagram, multi-layer OSI/TCP-IP mappings, and cloud comparisons. |
+| **Configuration Bundle** | [`docs/CONFIGURATION_BUNDLE.md`](docs/CONFIGURATION_BUNDLE.md) | Deployed configs (`dnsmasq`, `nginx`), TLS certificate authority setup notes, launch scripts, and runtime commands. |
+| **Backend Source Code** | [`backend/server.py`](backend/server.py) | Complete Python REST application (supports Node A `:3001` and Node B `:3002`), `X-Backend`, `Cache-Control`, `ETag`, and `304 Not Modified`. |
+| **Evidence Folder** | [`evidence/README.md`](evidence/README.md) | Complete multi-node evidence index mapping to the official submission form fields (DNS, TLS, Wireshark, caching, pings). |
+| **Failure Scenarios Analysis** | [`docs/FAILURE_ANALYSIS.md`](docs/FAILURE_ANALYSIS.md) | Exhaustive analysis of all 5 mandatory failure scenarios from Section 6.3 with layer isolation diagnostics. |
+| **Course Topic Mapping** | [`docs/COURSE_TOPIC_MAPPING.md`](docs/COURSE_TOPIC_MAPPING.md) | Direct mapping of Section 6.1 lecture topics (TCP/IP, routing, transport ports, TLS, caching) to implementation code. |
+| **Evaluation Checklist** | [`docs/EVALUATION_CHECKLIST.md`](docs/EVALUATION_CHECKLIST.md) | 11-step demonstration walkthrough (Section 8) and 50-mark Review 1 rubric alignment. |
+
+---
+
 ## 👥 Engineering Team · Section C
 
 | Machine | Role | Name | GitHub Handle | Responsibility |
