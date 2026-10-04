@@ -1,0 +1,18 @@
+PING 10.7.3.17 (10.7.3.17): 56 data bytes
+64 bytes from 10.7.3.17: icmp_seq=0 ttl=64 time=85.690 ms
+64 bytes from 10.7.3.17: icmp_seq=1 ttl=64 time=7.039 ms
+64 bytes from 10.7.3.17: icmp_seq=2 ttl=64 time=11.447 ms
+64 bytes from 10.7.3.17: icmp_seq=3 ttl=64 time=6.840 ms
+
+--- 10.7.3.17 ping statistics ---
+4 packets transmitted, 4 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 6.840/27.754/85.690/33.500 ms
+PING 10.3.2.17 (10.3.2.17): 56 data bytes
+64 bytes from 10.3.2.17: icmp_seq=0 ttl=63 time=47.971 ms
+64 bytes from 10.3.2.17: icmp_seq=1 ttl=63 time=6.899 ms
+64 bytes from 10.3.2.17: icmp_seq=2 ttl=63 time=38.236 ms
+64 bytes from 10.3.2.17: icmp_seq=3 ttl=63 time=7.026 ms
+
+--- 10.3.2.17 ping statistics ---
+4 packets transmitted, 4 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 6.899/25.033/47.971/18.395 ms

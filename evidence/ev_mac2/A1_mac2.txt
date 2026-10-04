@@ -1,0 +1,6 @@
+=== Mac 2: Jagruthi’s MacBook Pro ===
+  interface: en0
+IP: 10.7.21.15
+Mask: 255.255.224.0
+Gateway: 10.7.0.1
+	ether 9a:d6:ee:1f:bc:04
