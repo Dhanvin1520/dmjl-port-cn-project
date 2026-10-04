@@ -38,8 +38,8 @@
 ---
 
 ### 3. TLS Handshake & Cipher Negotiation (`C3_tls.png`)
-- **Client Hello (Frame 148):** Client offers supported TLS versions (TLS 1.2, TLS 1.3), SNI (`app.dmjl.test`), and cipher suite candidates.
-- **Server Hello (Frame 151):** Edge server selects `TLS_CHACHA20_POLY1305_SHA256` under TLS 1.3.
+- **Client Hello (Frame 148):** Client offers `supported_versions` TLS 1.3/1.2/1.1/1.0, SNI (`app.dmjl.test`), and 49 cipher suites (incl. `0x00ff` SCSV).
+- **Server Hello (Frame 151):** Edge selects `TLS_CHACHA20_POLY1305_SHA256` (`0x1303`) under TLS 1.3. The same segment carries ChangeCipherSpec (middlebox compatibility, RFC 8446) and four encrypted records of 70, 832, 281 and 53 bytes: EncryptedExtensions, Certificate, CertificateVerify and Finished. Each is the plaintext size seen in `curl -v` (53, 815, 264, 36 bytes) plus 17 bytes of AEAD overhead, so in TLS 1.3 the certificate itself is encrypted.
 - **Confidentiality:** In TLS 1.3, all subsequent handshake records and application payload (HTTP GET, headers, JSON body) are encapsulated in encrypted Application Data records (content type 23).
 ![C3 TLS Handshake](C3_tls.png)
 
@@ -53,5 +53,6 @@
 
 ### 5. 🌟 Bonus Trace: Reverse Proxy TLS Offloading (`C_bonus_http.png`)
 - **Architecture Validation:** Demonstrates that while client-to-edge traffic is encrypted with TLS 1.3 on port 443, traffic between Nginx (`10.7.21.15`) and Backend A (`10.7.3.17:3001`) is clean, unencrypted HTTP GET traffic.
+- **Source:** This screenshot comes from a separate capture; `dmjl_phase1_capture.pcapng` contains no plaintext HTTP.
 - **Proof:** Confirms that TLS terminates strictly at the edge proxy, exactly mirroring enterprise cloud architecture (e.g. AWS ALB to EC2).
 ![Bonus Cleartext HTTP Trace](C_bonus_http.png)
