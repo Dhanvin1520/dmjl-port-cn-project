@@ -26,5 +26,37 @@ All files listed below contain **raw, unedited terminal output and network captu
 
 ---
 
+## 📸 Wireshark Packet Inspection Gallery
+
+### 1. C1: DNS Query & Response (`dns.qry.name == "app.dmjl.test"`)
+Shows the UDP query from client (`10.7.3.17:51432`) to DNS server (`10.7.7.61:53`) and the A-record response pointing to `10.7.21.15` (TTL 30).
+![C1 DNS Query & Response](ev_mac3/C1_dns.png)
+
+---
+
+### 2. C2: TCP 3-Way Handshake (`ip.addr == 10.7.21.15 && tcp.port == 443`)
+Shows the `[SYN]`, `[SYN, ACK]`, and `[ACK]` packet exchange establishing connection-oriented transport.
+![C2 TCP Handshake](ev_mac3/C2_tcp.png)
+
+---
+
+### 3. C3: TLS Handshake & Cipher Suites (`ip.addr == 10.7.21.15 && tls`)
+Shows Client Hello advertising cipher suites and Server Hello establishing TLS 1.3 encryption.
+![C3 TLS Handshake](ev_mac3/C3_tls.png)
+
+---
+
+### 4. C3 (Cert): Certificate Packet Inspection
+Inspects the X.509 certificate payload presenting `CN=app.dmjl.test` issued by `CN=dmjl_port Local CA`.
+![C3 Certificate](ev_mac3/C3_cert.png)
+
+---
+
+### 5. 🌟 Bonus Proof: Cleartext HTTP Trace (TLS Offloading on Edge)
+Demonstrates plain HTTP GET request from Mac 2 (Edge) to Mac 3 (Backend A) on port 3001, proving reverse proxy TLS termination.
+![Bonus Cleartext HTTP Trace](ev_mac3/C_bonus_http.png)
+
+---
+
 > 📖 **Comprehensive Failure Scenarios Analysis:**  
 > For an in-depth diagnostic breakdown of all 5 mandatory failure scenarios specified in Section 6.3 of the Course Project specification, see [**`docs/FAILURE_ANALYSIS.md`**](../docs/FAILURE_ANALYSIS.md).
