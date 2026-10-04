@@ -1,0 +1,10 @@
+no-resolv
+server=8.8.8.8
+server=8.8.8.8
+interface=en0
+listen-address=127.0.0.1,10.7.7.61
+address=/app.dmjl.test/10.7.7.61
+address=/api.dmjl.test/10.7.7.61
+local-ttl=30
+log-queries
+log-facility=/tmp/dnsmasq.log
