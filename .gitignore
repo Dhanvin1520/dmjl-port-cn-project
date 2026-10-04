@@ -1,6 +1,13 @@
-# never commit private keys
+# Security: Never commit private keys or CSRs
 *.key
 *-key.pem
 *.srl
 *.csr
+
+# System files
 .DS_Store
+Thumbs.db
+
+# Project local artifacts & chat files
+teamchat/
+resources/

@@ -1,131 +1,212 @@
 # dmjl_port — Computer Networks Project (Phase 1: Build & Observe)
 
-Private network service platform on **4 MacBook Pros on one LAN** (Submission Type 1).
-A client resolves `app.dmjl.test` through our own DNS server, connects over HTTPS to an
-nginx edge that terminates TLS, and is load-balanced across two REST backends.
+A private, enterprise-grade distributed network platform built across **4 physical MacBook Pros on one LAN** (Submission Type 1). 
 
-> The application stays simple — the network is the project.
+A client resolves `app.dmjl.test` through our authoritative local DNS server, establishes an encrypted TLS 1.3 session with our edge reverse proxy, and is dynamically load-balanced across two independent application backends.
 
-## Team · Section C
+> *"The application stays simple — the network is the project."*
 
-| Enrollment | Name | Machine | Role |
-|---|---|---|---|
-| <ENROLLMENT> | Dhanvin Vadlamudi | Mac 1 | Private DNS server (dnsmasq) + test client, GitHub repo |
-| <ENROLLMENT> | Jagruthi <SURNAME> | Mac 2 | Edge: nginx reverse proxy, TLS, load balancer, video |
-| <ENROLLMENT> | Meka <SURNAME> | Mac 3 | Backend A (port 3001), Wireshark capture |
-| <ENROLLMENT> | Lalith <SURNAME> | Mac 4 | Backend B (port 3002) + main test client, evidence |
+---
 
-## Topology
+## 👥 Engineering Team · Section C
 
-| Machine | Private IP | Interface | Service | Port | Cloud equivalent |
+| Machine | Role | Name | GitHub Handle | Responsibility |
+|---|---|---|---|---|
+| **Mac 1** | **DNS Authority & Project Lead** | **Dhanvin Vadlamudi** | [@Dhanvin1520](https://github.com/Dhanvin1520) | Authoritative DNS server (`dnsmasq`), LAN routing, repository maintainer |
+| **Mac 2** | **Edge & TLS Proxy** | **Jagruthi Pulumati** | [@Jag2007](https://github.com/Jag2007) | Edge reverse proxy (`nginx`), TLS 1.3 termination, Root CA issuance, video lead |
+| **Mac 3** | **Application Node A** | **Chaitanya Sai Meka** | [@ChaitanyaSai-Meka](https://github.com/ChaitanyaSai-Meka) | Backend A instance (`:3001`), Wireshark deep packet inspection (DPI) & captures |
+| **Mac 4** | **Application Node B & Test Client** | **Kasula Lalithendra** | [@Lalith0024](https://github.com/Lalith0024) | Backend B instance (`:3002`), primary client test suite, telemetry & failover evidence |
+
+---
+
+## 🌐 Physical Network Topology
+
+All four nodes operate on the local college LAN with strict LAN IP assignments. No external domains or cloud intermediaries are utilized.
+
+| Node | Physical LAN IP | Interface | Port / Protocol | Service | Cloud Architecture Equivalent |
 |---|---|---|---|---|---|
-| Mac 1 | __MAC1_IP__ | en0 | dnsmasq (private DNS) | 53/UDP | Route 53 private hosted zone |
-| Mac 2 | __MAC2_IP__ | en0 | nginx (TLS + load balancer) | 443/TCP (80 → 301 to HTTPS) | ALB + certificate |
-| Mac 3 | __MAC3_IP__ | en0 | Backend A (Python) | 3001/TCP | App server instance A |
-| Mac 4 | __MAC4_IP__ | en0 | Backend B (Python) + test client | 3002/TCP | App server instance B |
+| **Mac 1** | `10.7.7.61` | `en0` | `53/UDP` | `dnsmasq` (Private Authoritative DNS) | AWS Route 53 Private Hosted Zone |
+| **Mac 2** | `10.7.21.15` | `en0` | `443/TCP` (TLS)<br/>`80/TCP` (301 Redirect) | `nginx` (Edge Reverse Proxy & Load Balancer) | AWS Application Load Balancer (ALB) |
+| **Mac 3** | `10.7.3.17` | `en0` | `3001/TCP` (HTTP) | Backend Service Replica A (Python) | Amazon EC2 Target Group Instance A |
+| **Mac 4** | `10.3.2.17` | `en0` | `3002/TCP` (HTTP) | Backend Service Replica B (Python) + Test Client | Amazon EC2 Target Group Instance B |
 
-Private domain (reserved `.test` namespace): `app.dmjl.test`, `api.dmjl.test` → Mac 2.
+**Private Namespace:** `app.dmjl.test` and `api.dmjl.test` (RFC 2606 reserved `.test` TLD) resolve strictly to Mac 2 (`10.7.21.15`).
 
 ```mermaid
-flowchart LR
-    C["Client<br/>(Mac 4 / Mac 1)"] -- "1. DNS query UDP/53" --> D["Mac 1<br/>dnsmasq"]
-    D -- "2. A record = Mac 2 IP" --> C
-    C -- "3. HTTPS TCP/443 (TLS)" --> N["Mac 2<br/>nginx edge"]
-    N -- "4. HTTP :3001" --> A["Mac 3<br/>Backend A"]
-    N -- "4. HTTP :3002" --> B["Mac 4<br/>Backend B"]
+flowchart TD
+    subgraph LAN["Physical LAN (Wi-Fi: en0)"]
+        subgraph ClientNode["Client (Mac 4 / Mac 1)"]
+            Client["Test Client (curl / browser)"]
+        end
+
+        subgraph DNSNode["Mac 1 — DNS Server (10.7.7.61)"]
+            DNS["dnsmasq (Port 53/UDP)<br/>Authoritative for *.dmjl.test"]
+        end
+
+        subgraph EdgeNode["Mac 2 — Edge Proxy (10.7.21.15)"]
+            NGINX["nginx 1.31+<br/>TLS 1.3 Termination<br/>Round-Robin Load Balancer"]
+        end
+
+        subgraph BackendA["Mac 3 — Node A (10.7.3.17)"]
+            ServerA["Backend A (:3001)<br/>Python REST + ETag Cache"]
+        end
+
+        subgraph BackendB["Mac 4 — Node B (10.3.2.17)"]
+            ServerB["Backend B (:3002)<br/>Python REST + ETag Cache"]
+        end
+    end
+
+    Client -- "1. DNS Query: app.dmjl.test (UDP 53)" --> DNS
+    DNS -- "2. DNS Answer: 10.7.21.15 (TTL 30s)" --> Client
+    Client -- "3. TCP 3-Way Handshake + TLS 1.3 (Port 443)" --> NGINX
+    NGINX -- "4. Round-Robin Request (Plain HTTP :3001)" --> ServerA
+    NGINX -- "4. Round-Robin Request (Plain HTTP :3002)" --> ServerB
 ```
 
-## Request flow (one `curl https://app.dmjl.test/api/status`)
+---
+
+## 🔄 End-to-End Request Lifecycle
 
 ```mermaid
 sequenceDiagram
-    participant C as Client (Mac 4)
-    participant D as DNS (Mac 1)
-    participant E as nginx edge (Mac 2)
-    participant A as Backend A (Mac 3)
-    C->>D: DNS query A app.dmjl.test (UDP 53)
-    D-->>C: app.dmjl.test A = Mac 2 IP (TTL 30)
-    C->>E: TCP SYN to port 443
-    E-->>C: SYN-ACK
-    C->>E: ACK (connection established)
-    C->>E: TLS ClientHello (SNI app.dmjl.test)
-    E-->>C: ServerHello + Certificate (signed by our CA)
-    C->>E: HTTP GET /api/status (encrypted inside TLS)
-    E->>A: HTTP GET /api/status (plain HTTP, own TCP connection, port 3001)
-    A-->>E: 200 JSON, X-Backend: A
-    E-->>C: 200 over TLS, X-Backend: A
+    autonumber
+    participant C as Client (Mac 4: 10.3.2.17)
+    participant D as DNS (Mac 1: 10.7.7.61)
+    participant E as Edge / Nginx (Mac 2: 10.7.21.15)
+    participant A as Backend A (Mac 3: 10.7.3.17:3001)
+    participant B as Backend B (Mac 4: 10.3.2.17:3002)
+
+    Note over C,D: Phase 1: Name Resolution
+    C->>D: Standard Query: A app.dmjl.test (UDP 53)
+    D-->>C: Standard Query Response: 10.7.21.15 (TTL 30)
+
+    Note over C,E: Phase 2: Transport & Security Handshake
+    C->>E: TCP SYN (Port 443)
+    E-->>C: TCP SYN, ACK
+    C->>E: TCP ACK (Connection Established)
+    C->>E: TLS 1.3 Client Hello (SNI: app.dmjl.test)
+    E-->>C: TLS 1.3 Server Hello + Certificate (CN=app.dmjl.test)
+    Note over C: Client verifies cert chain using trusted rootCA.pem
+
+    Note over C,A: Phase 3: Application Data Exchange & Proxying
+    C->>E: Encrypted HTTP GET /api/status (TLS Record)
+    E->>A: Unencrypted HTTP/1.0 GET /api/status (Internal LAN)
+    A-->>E: HTTP 200 OK + {"backend": "A"} + ETag: "status-v1"
+    E-->>C: Encrypted HTTP/1.1 200 OK (X-Backend: A)
+
+    Note over C,B: Phase 4: Subsequent Request (Round-Robin)
+    C->>E: Encrypted HTTP GET /api/status
+    E->>B: Unencrypted HTTP/1.0 GET /api/status
+    B-->>E: HTTP 200 OK + {"backend": "B"} + ETag: "status-v1"
+    E-->>C: Encrypted HTTP/1.1 200 OK (X-Backend: B)
 ```
 
-| Layer (TCP/IP) | OSI | Protocol in this project | Where we prove it |
-|---|---|---|---|
-| Application | 7 | DNS (dnsmasq), HTTP/1.1 (REST, caching headers) | `dig`, `curl -v`, `curl -I` |
-| Application | 5–6 | TLS 1.2 / 1.3, terminated at nginx | `curl -v`, Wireshark `tls` |
-| Transport | 4 | UDP 53 (DNS), TCP 443 / 3001 / 3002 | Wireshark `dns`, `tcp.flags.syn==1` |
-| Internet | 3 | IPv4 private addresses on the college LAN | `ping` matrix |
-| Link | 1–2 | Wi-Fi (en0) | interface table above |
+---
 
-## How to run
+## 📊 Protocol & OSI Layer Mapping
 
-All Macs: `git clone` this repo to `~/dmjl` and set the four IPs as shell variables
-(`MAC1_IP` … `MAC4_IP`).
+| Layer (TCP/IP) | OSI Model | Protocol Employed | Platform Component | Concrete Evidence |
+|---|---|---|---|---|
+| **Application** | Layer 7 | DNS (`RFC 1035`) | `dnsmasq` on Mac 1 | [`A3_dig_client.txt`](evidence/ev_mac4/A3_dig_client.txt), [`C1_dns.png`](evidence/ev_mac3/C1_dns.png) |
+| **Application** | Layer 7 | HTTP/1.1 & HTTP/1.0 | REST Backends & Nginx | [`B2_lb_6x.txt`](evidence/ev_mac4/B2_lb_6x.txt), [`D1_headers.txt`](evidence/ev_mac4/D1_headers.txt) |
+| **Presentation** | Layer 6 | TLS 1.3 (`RFC 8446`) | Nginx SSL Module | [`B1_curl_v.txt`](evidence/ev_mac4/B1_curl_v.txt), [`C3_tls.png`](evidence/ev_mac3/C3_tls.png), [`C3_cert.png`](evidence/ev_mac3/C3_cert.png) |
+| **Transport** | Layer 4 | UDP (Port 53), TCP (443, 3001, 3002) | Socket Layer | [`C2_tcp.png`](evidence/ev_mac3/C2_tcp.png), [`C_bonus_http.png`](evidence/ev_mac3/C_bonus_http.png) |
+| **Network** | Layer 3 | IPv4 Routing & ICMP | LAN Subnets (`10.7.x.x` / `10.3.x.x`) | [`A5_pings_mac1.txt`](evidence/ev_mac1/A5_pings_mac1.txt), [`A5_pings_mac2.txt`](evidence/ev_mac2/A5_pings_mac2.txt) |
+| **Data Link / Physical** | Layers 1–2 | IEEE 802.11 Wi-Fi (`en0`) | Hardware Interfaces | [`A1_mac1.txt`](evidence/ev_mac1/A1_mac1.txt) to [`A1_mac4.txt`](evidence/ev_mac4/A1_mac4.txt) |
 
-**Backends (Mac 3 and Mac 4)** — Python 3 standard library only, no installs:
+---
 
-    python3 ~/dmjl/backend/server.py A 3001     # Mac 3
-    python3 ~/dmjl/backend/server.py B 3002     # Mac 4
+## 🌟 Bonus Implementation: Visual Proof of TLS Termination
 
-| Endpoint | Response |
-|---|---|
-| `GET /` | `{"service": "dmjl_port", "backend": "A", "message": "Backend A is running"}` |
-| `GET /api/status` | `{"backend": "A", "status": "ok"}` + `Cache-Control: public, max-age=60` + `ETag: "status-v1"` (304 on `If-None-Match`) |
-| every response | header `X-Backend: A` or `X-Backend: B` |
+In production microservice architectures (e.g. AWS ALB to EC2), ingress traffic from clients across the WAN/LAN is secured with TLS, while internal communications between the load balancer and backend workers are offloaded to high-performance cleartext HTTP.
 
-**DNS (Mac 1)** — `brew install dnsmasq`, then render the template and start:
+Our capture in [`C_bonus_http.png`](evidence/ev_mac3/C_bonus_http.png) definitively demonstrates this:
+1. **Client to Edge (Mac 4 ➔ Mac 2):** Encrypted TLS 1.3 payload over port 443 (captured in `C3_tls.png`).
+2. **Edge to Backend (Mac 2 ➔ Mac 3):** Clean, unencrypted HTTP GET request over port 3001 captured live on Mac 3's Wi-Fi interface.
 
-    B=$(brew --prefix); UP=$(ipconfig getoption en0 domain_name_server)
-    sed -e "s/__MAC1_IP__/$MAC1_IP/g" -e "s/__MAC2_IP__/$MAC2_IP/g" \
-        -e "s/__UPSTREAM_DNS__/${UP:-8.8.8.8}/g" dns/dnsmasq.conf > $B/etc/dnsmasq.conf
-    sudo brew services start dnsmasq
-    # every client:  sudo networksetup -setdnsservers Wi-Fi $MAC1_IP
+---
 
-**TLS (Mac 2)** — `bash tls/make-certs.sh` creates our local CA (`tls/ca.cnf`) and a server
-certificate for `app.dmjl.test` with SAN `app.dmjl.test, api.dmjl.test` (`tls/server.ext`).
-`rootCA.pem` is trusted on every Mac (System keychain + `/etc/ssl/cert.pem`), so no client
-ever uses `-k`. Private keys are never committed (`.gitignore`).
+## 🛡️ High Availability & Automatic Failover (Option A)
 
-**Edge (Mac 2)** — `brew install nginx`, render and start:
+Our edge proxy is configured with active error interception and passive health check policies (`max_fails=1 fail_timeout=10s`):
+- **Normal State:** Requests cycle evenly: `A -> B -> A -> B -> A -> B` ([`D3_before.txt`](evidence/ev_mac4/D3_before.txt)).
+- **Fault Injected:** Backend A process is killed (`Ctrl+C` on Mac 3). 
+- **Network Resilience:** DNS resolution and ICMP pings to Mac 3 remain unaffected ([`D3_layers.txt`](evidence/ev_mac4/D3_layers.txt)).
+- **Automatic Failover:** When Nginx encounters a connection refusal on port 3001, it instantaneously retries the idempotent request against Backend B within the same client transaction. The client experiences **zero connection errors**, and 100% of requests successfully return HTTP 200 via Backend B ([`D3_after.txt`](evidence/ev_mac4/D3_after.txt)).
+- **Restoration:** Once Backend A is brought back online, Nginx automatically rejoins it to the pool after the timeout period ([`D3_restored.txt`](evidence/ev_mac4/D3_restored.txt)).
 
-    B=$(brew --prefix)
-    sed -e "s|__BREW__|$B|g" -e "s|__MAC3_IP__|$MAC3_IP|g" -e "s|__MAC4_IP__|$MAC4_IP|g" \
-        nginx/nginx.conf > $B/etc/nginx/nginx.conf
-    sudo nginx -t && sudo nginx
+---
 
-## Verify (from a client Mac)
+## 📁 Repository & Evidence Index
 
-    dig app.dmjl.test                    # ANSWER = Mac 2, SERVER = Mac 1
-    dig @8.8.8.8 app.dmjl.test           # NXDOMAIN: the name is private
-    curl -v https://app.dmjl.test        # TLS verified, HTTP 200, no -k
-    for i in {1..6}; do curl -si https://app.dmjl.test/api/status | grep -i x-backend; done
-    curl -sI https://app.dmjl.test/api/status
-    curl -sI -H 'If-None-Match: "status-v1"' https://app.dmjl.test/api/status   # 304
-
-## Failure demonstration (Option A — stop one backend)
-
-Stop Backend A (Ctrl+C on Mac 3): DNS and ping still work, every response becomes
-`X-Backend: B` with HTTP 200 (nginx `max_fails=1 fail_timeout=10s` retries on B).
-Restart it and round robin resumes. Layer affected: application (one backend).
-
-## Evidence
-
-Everything pasted into the Phase 1 form is in [`evidence/`](evidence/README.md),
-collected from real terminal output on each Mac.
-
-## Repository layout
+All project evidence collected during the live multi-node session is archived in [`evidence/`](evidence/README.md):
 
 ```
-backend/server.py      REST backend (same file runs as A and B)
-dns/dnsmasq.conf       Mac 1 DNS config template
-nginx/nginx.conf       Mac 2 edge config template (TLS + upstream)
-tls/                   CA + server cert config and make-certs.sh
-evidence/              terminal outputs, Wireshark capture + screenshots
+evidence/
+├── README.md                      # Comprehensive form-to-evidence mapping table
+├── ev_mac1/                       # Node 1: Dhanvin Vadlamudi (DNS Authority)
+│   ├── A1_mac1.txt                # Interface & IP configuration
+│   ├── A2_dnsmasq.txt             # Active dnsmasq runtime configuration
+│   ├── A5_pings_mac1.txt          # ICMP reachability verification (0.0% loss)
+│   └── dnsmasq.conf               # Deployed configuration file
+├── ev_mac2/                       # Node 2: Jagruthi Pulumati (Edge Proxy & TLS)
+│   ├── A1_mac2.txt                # Interface & IP configuration
+│   ├── A5_pings_mac2.txt          # ICMP reachability verification (0.0% loss)
+│   └── B3_nginx.conf              # Upstream load balancing & TLS configuration
+├── ev_mac3/                       # Node 3: Chaitanya Sai Meka (Backend A & Wireshark)
+│   ├── A1_mac3.txt                # Interface & IP configuration
+│   ├── A5_pings_mac3.txt          # ICMP reachability verification (0.0% loss)
+│   ├── dmjl_phase1_capture.pcapng # Full live raw packet capture
+│   ├── C1_dns.png                 # Wireshark DNS query/response trace
+│   ├── C2_tcp.png                 # Wireshark TCP 3-way handshake (SYN, SYN-ACK, ACK)
+│   ├── C3_tls.png                 # Wireshark TLS Client/Server Hello & Cipher Suites
+│   ├── C3_cert.png                # Wireshark TLS Certificate packet inspection
+│   └── C_bonus_http.png           # BONUS: Plaintext HTTP trace between edge & backend
+└── ev_mac4/                       # Node 4: Kasula Lalithendra (Backend B & Client)
+    ├── A1_mac4.txt                # Interface & IP configuration
+    ├── A3_dig_client.txt          # Resolution of app.dmjl.test via Mac 1
+    ├── A4_dig_8888.txt            # Proof of private domain isolation (NXDOMAIN @8.8.8.8)
+    ├── B1_curl_v.txt              # Verbose TLS handshake verification (no -k flag)
+    ├── B2_lb_6x.txt               # 6x round-robin alternating response trace
+    ├── D1_headers.txt             # RFC 7234 Cache-Control and ETag headers
+    ├── D1_304.txt                 # RFC 7232 HTTP 304 Not Modified revalidation
+    ├── D3_before.txt              # Pre-failure load balancing state
+    ├── D3_layers.txt              # Verification of DNS & IP layers during backend fault
+    ├── D3_after.txt               # Post-failure 100% failover to Backend B
+    └── D3_restored.txt            # Post-restoration recovery trace
 ```
+
+---
+
+## 🛠️ Verification & Reproduction Commands
+
+Clone this repository:
+```bash
+git clone https://github.com/Dhanvin1520/dmjl-port-cn-project.git ~/dmjl
+cd ~/dmjl
+```
+
+1. **Verify Private DNS:**
+   ```bash
+   dig @10.7.7.61 app.dmjl.test +short
+   # Returns: 10.7.21.15
+   ```
+2. **Verify Public DNS Isolation:**
+   ```bash
+   dig @8.8.8.8 app.dmjl.test
+   # Returns: NXDOMAIN
+   ```
+3. **Verify TLS 1.3 Handshake (No `-k` flag):**
+   ```bash
+   curl -v https://app.dmjl.test/api/status
+   # Returns: SSL certificate verify ok, HTTP/1.1 200 OK
+   ```
+4. **Verify Load Balancing Alternation:**
+   ```bash
+   for i in {1..6}; do curl -si https://app.dmjl.test/api/status | grep -iE '^HTTP|x-backend'; done
+   ```
+5. **Verify HTTP 304 Caching:**
+   ```bash
+   curl -sI -H 'If-None-Match: "status-v1"' https://app.dmjl.test/api/status
+   # Returns: HTTP/1.1 304 Not Modified
+   ```
