@@ -34,8 +34,8 @@ flowchart TD
             Client["Test Client<br/>(curl / Safari / Chrome)<br/>IP: 10.3.2.17"]
         end
 
-        subgraph DNSNode["Mac 1 — Authoritative DNS (10.7.7.61)"]
-            DNS["dnsmasq (Port 53/UDP)<br/>Authoritative zone: *.dmjl.test<br/>Upstream Forwarder: LAN DNS / 8.8.8.8"]
+        subgraph DNSNode["Mac 1 — Private DNS (10.7.7.61)"]
+            DNS["dnsmasq (Port 53/UDP)<br/>Local records: *.dmjl.test<br/>Upstream Forwarder: LAN DNS / 8.8.8.8"]
         end
 
         subgraph EdgeNode["Mac 2 — Edge Reverse Proxy & ALB (10.7.21.15)"]
@@ -111,8 +111,8 @@ This architecture directly demonstrates every layer of the classical OSI referen
 
 | Layer (TCP/IP) | OSI Model Equivalent | Protocol in This Implementation | Operational Behavior & Evidence |
 |---|---|---|---|
-| **Application** | Layer 7 | **DNS** (`RFC 1035`) | Authoritative resolution of `.test` domain via `dnsmasq` on port 53. Evidence: [`A3_dig_client.txt`](evidence/ev_mac4/A3_dig_client.txt), [`C1_dns.png`](evidence/ev_mac3/C1_dns.png). |
-| **Application** | Layer 7 | **HTTP/1.1 & REST** (`RFC 7230-7235`) | JSON payload exchange, `X-Backend` header routing, `Cache-Control: max-age=60`, conditional `If-None-Match` revalidation (`304 Not Modified`). Evidence: [`B2_lb_6x.txt`](evidence/ev_mac4/B2_lb_6x.txt), [`D1_304.txt`](evidence/ev_mac4/D1_304.txt). |
+| **Application** | Layer 7 | **DNS** (`RFC 1035`) | Private resolution of the `.test` domain via `dnsmasq` on port 53. Evidence: [`A3_dig_client.txt`](evidence/ev_mac4/A3_dig_client.txt), [`C1_dns.png`](evidence/ev_mac3/C1_dns.png). |
+| **Application** | Layer 7 | **HTTP/1.1 & REST** (`RFC 9110`, `RFC 9111`, `RFC 9112`) | JSON payload exchange, `X-Backend` header routing, `Cache-Control: max-age=60`, conditional `If-None-Match` revalidation (`304 Not Modified`). Evidence: [`B2_lb_6x.txt`](evidence/ev_mac4/B2_lb_6x.txt), [`D1_304.txt`](evidence/ev_mac4/D1_304.txt). |
 | **Presentation** | Layer 6 | **TLS 1.3** (`RFC 8446`) | Edge TLS termination on Nginx. Session encryption, X.509 certificate validation, perfect forward secrecy (PFS). Evidence: [`B1_curl_v.txt`](evidence/ev_mac4/B1_curl_v.txt), [`C3_tls.png`](evidence/ev_mac3/C3_tls.png). |
 | **Session** | Layer 5 | **Sockets & TLS Sessions** | Session setup, teardown, socket management across client, edge, and backend pools. |
 | **Transport** | Layer 4 | **TCP** (`RFC 793`) & **UDP** (`RFC 768`) | UDP 53 for lightweight DNS lookups; reliable connection-oriented TCP (SYN/SYN-ACK/ACK) on port 443, 3001, 3002. Evidence: [`C2_tcp.png`](evidence/ev_mac3/C2_tcp.png). |

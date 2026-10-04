@@ -2,7 +2,7 @@
 
 A private, distributed network platform built across **4 physical MacBook Pros on one LAN** (Submission Type 1). 
 
-A client resolves `app.dmjl.test` through our authoritative local DNS server, establishes an encrypted TLS 1.3 session with our edge reverse proxy, and is dynamically load-balanced across two independent application backends.
+A client resolves `app.dmjl.test` through our private local DNS server, establishes an encrypted TLS 1.3 session with our edge reverse proxy, and is dynamically load-balanced across two independent application backends.
 
 > *"The application stays simple — the network is the project."*
 
@@ -28,7 +28,7 @@ All deliverables specified in **Section 9** and **Section 6** of the Course Proj
 
 | Machine | Role | Name | GitHub Handle | Responsibility |
 |---|---|---|---|---|
-| **Mac 1** | **DNS Authority & Project Lead** | **Dhanvin Vadlamudi** | [@Dhanvin1520](https://github.com/Dhanvin1520) | Authoritative DNS server (`dnsmasq`), LAN routing, repository maintainer |
+| **Mac 1** | **Private DNS & Project Lead** | **Dhanvin Vadlamudi** | [@Dhanvin1520](https://github.com/Dhanvin1520) | Private DNS server (`dnsmasq`), LAN routing, repository maintainer |
 | **Mac 2** | **Edge & TLS Proxy** | **Jagruthi Pulumati** | [@Jag2007](https://github.com/Jag2007) | Edge reverse proxy (`nginx`), TLS 1.3 termination, Root CA issuance, video lead |
 | **Mac 3** | **Application Node A** | **Chaitanya Sai Meka** | [@ChaitanyaSai-Meka](https://github.com/ChaitanyaSai-Meka) | Backend A instance (`:3001`), Wireshark deep packet inspection (DPI) & captures |
 | **Mac 4** | **Application Node B & Test Client** | **Kasula Lalithendra** | [@Lalith0024](https://github.com/Lalith0024) | Backend B instance (`:3002`), primary client test suite, telemetry & failover evidence |
@@ -59,7 +59,7 @@ All four nodes operate on the local college LAN with strict LAN IP assignments. 
 
 | Node | Physical LAN IP | Interface | Port / Protocol | Service | Cloud Architecture Equivalent |
 |---|---|---|---|---|---|
-| **Mac 1** | `10.7.7.61` | `en0` | `53/UDP` | `dnsmasq` (Private Authoritative DNS) | AWS Route 53 Private Hosted Zone |
+| **Mac 1** | `10.7.7.61` | `en0` | `53/UDP` | `dnsmasq` (Private DNS) | AWS Route 53 Private Hosted Zone |
 | **Mac 2** | `10.7.21.15` | `en0` | `443/TCP` (TLS)<br/>`80/TCP` (301 Redirect) | `nginx` (Edge Reverse Proxy & Load Balancer) | AWS Application Load Balancer (ALB) |
 | **Mac 3** | `10.7.3.17` | `en0` | `3001/TCP` (HTTP) | Backend Service Replica A (Python) | Amazon EC2 Target Group Instance A |
 | **Mac 4** | `10.3.2.17` | `en0` | `3002/TCP` (HTTP) | Backend Service Replica B (Python) + Test Client | Amazon EC2 Target Group Instance B |
@@ -74,7 +74,7 @@ flowchart TD
         end
 
         subgraph DNSNode["Mac 1 — DNS Server (10.7.7.61)"]
-            DNS["dnsmasq (Port 53/UDP)<br/>Authoritative for *.dmjl.test"]
+            DNS["dnsmasq (Port 53/UDP)<br/>Local records for *.dmjl.test"]
         end
 
         subgraph EdgeNode["Mac 2 — Edge Proxy (10.7.21.15)"]
@@ -202,8 +202,8 @@ evidence/
     ├── A4_dig_8888.txt            # Proof of private domain isolation (NXDOMAIN @8.8.8.8)
     ├── B1_curl_v.txt              # Verbose TLS handshake verification (no -k flag)
     ├── B2_lb_6x.txt               # 6x round-robin alternating response trace
-    ├── D1_headers.txt             # RFC 7234 Cache-Control and ETag headers
-    ├── D1_304.txt                 # RFC 7232 HTTP 304 Not Modified revalidation
+    ├── D1_headers.txt             # RFC 9111 Cache-Control and ETag headers
+    ├── D1_304.txt                 # RFC 9110 HTTP 304 Not Modified revalidation
     ├── D3_before.txt              # Pre-failure load balancing state
     ├── D3_layers.txt              # Verification of DNS & IP layers during backend fault
     ├── D3_after.txt               # Post-failure 100% failover to Backend B

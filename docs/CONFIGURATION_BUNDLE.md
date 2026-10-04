@@ -4,7 +4,7 @@ This document consolidates all configuration templates, runtime parameters, laun
 
 ---
 
-## 1. Node 1: Private Authoritative DNS (`dnsmasq`)
+## 1. Node 1: Private DNS (`dnsmasq`)
 
 - **Host Machine:** Mac 1 (`10.7.7.61`)
 - **Config Template Path:** [`dns/dnsmasq.conf`](../dns/dnsmasq.conf)
@@ -22,7 +22,7 @@ server=8.8.8.8
 interface=en0
 listen-address=127.0.0.1,10.7.7.61
 
-# Authoritative A Records for Private Domain
+# Local A Records for Private Domain
 address=/app.dmjl.test/10.7.21.15
 address=/api.dmjl.test/10.7.21.15
 

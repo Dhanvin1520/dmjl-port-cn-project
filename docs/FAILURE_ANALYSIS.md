@@ -70,7 +70,7 @@ When a failure occurs in a networked distributed system, diagnosis must proceed 
 - **Layer Isolation Explanation:**
   This clearly delineates **where the edge ends and the backend begins**:
   - The Edge reverse proxy is fully operational at Layers 3, 4, 6, and 7.
-  - The application backend cluster is unavailable. The edge communicates this upstream failure to the client via RFC 7231 status code `502 Bad Gateway`.
+  - The application backend cluster is unavailable. The edge communicates this upstream failure to the client via RFC 9110 status code `502 Bad Gateway`.
 - **Evidence File:** [`evidence/failures/F4_both_backends_down.txt`](../evidence/failures/F4_both_backends_down.txt)
 
 ---

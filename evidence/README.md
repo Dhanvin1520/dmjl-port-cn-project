@@ -9,7 +9,7 @@ All files listed below contain **raw, unedited terminal output and network captu
 | Form Section & Field | Source Node | Captured Evidence File | Verified Output Summary |
 |---|---|---|---|
 | **A1 — Machine Roles & Interface Details** | All Nodes | [`ev_mac1/A1_mac1.txt`](ev_mac1/A1_mac1.txt)<br/>[`ev_mac2/A1_mac2.txt`](ev_mac2/A1_mac2.txt)<br/>[`ev_mac3/A1_mac3.txt`](ev_mac3/A1_mac3.txt)<br/>[`ev_mac4/A1_mac4.txt`](ev_mac4/A1_mac4.txt) | Confirms physical IP assignments (`10.7.7.61`, `10.7.21.15`, `10.7.3.17`, `10.3.2.17`), default routes, MAC addresses, and `en0` interface. |
-| **A2 — dnsmasq Configuration** | Mac 1 | [`ev_mac1/A2_dnsmasq.txt`](ev_mac1/A2_dnsmasq.txt)<br/>(Full config: [`ev_mac1/dnsmasq.conf`](ev_mac1/dnsmasq.conf)) | Authoritative mapping for `app.dmjl.test` and `api.dmjl.test` pointing to `10.7.21.15` with TTL 30s and upstream forwarding. |
+| **A2 — dnsmasq Configuration** | Mac 1 | [`ev_mac1/A2_dnsmasq.txt`](ev_mac1/A2_dnsmasq.txt)<br/>(Full config: [`ev_mac1/dnsmasq.conf`](ev_mac1/dnsmasq.conf)) | Local A-record mapping for `app.dmjl.test` and `api.dmjl.test` pointing to `10.7.21.15` with TTL 30s and upstream forwarding. |
 | **A3 — DNS Resolution from Client** | Mac 4 | [`ev_mac4/A3_dig_client.txt`](ev_mac4/A3_dig_client.txt) | Standard `dig app.dmjl.test` showing `status: NOERROR`, `ANSWER: 10.7.21.15`, and `SERVER: 10.7.7.61#53`. |
 | **A4 — Private Domain Isolation** | Mac 4 | [`ev_mac4/A4_dig_8888.txt`](ev_mac4/A4_dig_8888.txt) | `dig @8.8.8.8 app.dmjl.test` returning `NXDOMAIN`, proving `.test` is purely private and isolated from public DNS. |
 | **A5 — Full Mesh ICMP Ping Reachability** | All Nodes | [`ev_mac1/A5_pings_mac1.txt`](ev_mac1/A5_pings_mac1.txt)<br/>[`ev_mac2/A5_pings_mac2.txt`](ev_mac2/A5_pings_mac2.txt)<br/>[`ev_mac3/A5_pings_mac3.txt`](ev_mac3/A5_pings_mac3.txt) | 6 pairwise ping audits confirming bidirectional IP connectivity with **0.0% packet loss**. |
@@ -29,7 +29,7 @@ All files listed below contain **raw, unedited terminal output and network captu
 ## 📸 Wireshark Packet Inspection Gallery
 
 ### 1. C1: DNS Query & Response (`dns.qry.name == "app.dmjl.test"`)
-Shows the UDP query (Frame 134) from client (`10.7.3.17:59955`) to DNS server (`10.7.7.61:53`) and authoritative A-record response (Frame 141) pointing to `10.7.21.15` (Transaction ID `0x205c`, TTL 30s).
+Shows the UDP query (Frame 134) from client (`10.7.3.17:59955`) to DNS server (`10.7.7.61:53`) and A-record response with the AA flag set (Frame 141) pointing to `10.7.21.15` (Transaction ID `0x205c`, TTL 30s).
 ![C1 DNS Query & Response](ev_mac3/C1_dns.png)
 
 ---

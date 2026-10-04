@@ -11,7 +11,7 @@
 
 | Artifact | Wireshark Display Filter | Protocol Layer | Description |
 |---|---|---|---|
-| [`C1_dns.png`](C1_dns.png) | `dns.qry.name == "app.dmjl.test"` | Application (UDP 53) | Private DNS query and authoritative A-record answer pointing to `10.7.21.15`. |
+| [`C1_dns.png`](C1_dns.png) | `dns.qry.name == "app.dmjl.test"` | Application (UDP 53) | Private DNS query and A-record answer (AA flag set) pointing to `10.7.21.15`. |
 | [`C2_tcp.png`](C2_tcp.png) | `ip.addr == 10.7.21.15 && tcp.port == 443` | Transport (TCP 443) | Standard 3-way handshake (`[SYN]`, `[SYN, ACK]`, `[ACK]`) before TLS negotiation. |
 | [`C3_tls.png`](C3_tls.png) | `ip.addr == 10.7.21.15 && tls` | Presentation (TLS 1.3) | Client Hello cipher suites and Server Hello handshake establishment. |
 | [`C3_cert.png`](C3_cert.png) | `tls.handshake.type == 11` | Security (X.509) | Server certificate payload presenting `CN=app.dmjl.test` issued by local CA. |
