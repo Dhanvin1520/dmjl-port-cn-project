@@ -14,6 +14,7 @@ All deliverables specified in **Section 9** and **Section 6** of the Course Proj
 
 | Deliverable (Section 9) | Repository Path | Description |
 |---|---|---|
+| **Phase 1 Final Report** | [`docs/PHASE1_FINAL_REPORT.md`](docs/PHASE1_FINAL_REPORT.md) | One-document summary: request flow, both Wireshark captures frame by frame, ports, caching, and all failure demonstrations. |
 | **Architecture Document** | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Network topology, IP/service inventory, request sequence diagram, multi-layer OSI/TCP-IP mappings, and cloud comparisons. |
 | **Configuration Bundle** | [`docs/CONFIGURATION_BUNDLE.md`](docs/CONFIGURATION_BUNDLE.md) | Deployed configs (`dnsmasq`, `nginx`), TLS certificate authority setup notes, launch scripts, and runtime commands. |
 | **Backend Source Code** | [`backend/server.py`](backend/server.py) | Complete Python REST application (supports Node A `:3001` and Node B `:3002`), `X-Backend`, `Cache-Control`, `ETag`, and `304 Not Modified`. |
