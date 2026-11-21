@@ -1,0 +1,1 @@
+	inet 10.239.23.87 netmask 0xffffff00 broadcast 10.239.23.255

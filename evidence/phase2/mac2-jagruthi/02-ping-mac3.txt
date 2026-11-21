@@ -1,0 +1,9 @@
+PING 10.239.23.127 (10.239.23.127): 56 data bytes
+64 bytes from 10.239.23.127: icmp_seq=0 ttl=64 time=265.528 ms
+64 bytes from 10.239.23.127: icmp_seq=1 ttl=64 time=254.053 ms
+64 bytes from 10.239.23.127: icmp_seq=2 ttl=64 time=254.319 ms
+64 bytes from 10.239.23.127: icmp_seq=3 ttl=64 time=258.163 ms
+
+--- 10.239.23.127 ping statistics ---
+4 packets transmitted, 4 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 254.053/258.016/265.528/4.632 ms

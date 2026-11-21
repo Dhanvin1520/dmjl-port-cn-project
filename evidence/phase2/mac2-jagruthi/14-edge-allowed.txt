@@ -1,0 +1,28 @@
+Backend A from nginx edge:
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    32  100    32    0     0     61      0 --:--:-- --:--:-- --:--:--    61
+HTTP/1.0 200 OK
+Server: dmjl-backend/1.0 Python/3.9.6
+Date: Sat, 21 Nov 2026 15:49:15 GMT
+Content-Type: application/json
+X-Backend: A
+Cache-Control: public, max-age=60
+ETag: "status-v1"
+Content-Length: 32
+
+{"backend": "A", "status": "ok"}
+Backend B from nginx edge:
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    32  100    32    0     0     53      0 --:--:-- --:--:-- --:--:--    53
+HTTP/1.0 200 OK
+Server: dmjl-backend/1.0 Python/3.14.3
+Date: Sat, 21 Nov 2026 15:49:16 GMT
+Content-Type: application/json
+X-Backend: B
+Cache-Control: public, max-age=60
+ETag: "status-v1"
+Content-Length: 32
+
+{"backend": "B", "status": "ok"}

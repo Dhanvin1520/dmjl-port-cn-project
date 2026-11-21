@@ -1,0 +1,13 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    32  100    32    0     0     58      0 --:--:-- --:--:-- --:--:--    58
+HTTP/1.0 200 OK
+Server: dmjl-backend/1.0 Python/3.9.6
+Date: Sat, 21 Nov 2026 14:18:28 GMT
+Content-Type: application/json
+X-Backend: A
+Cache-Control: public, max-age=60
+ETag: "status-v1"
+Content-Length: 32
+
+{"backend": "A", "status": "ok"}

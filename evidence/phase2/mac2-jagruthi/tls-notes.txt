@@ -1,0 +1,26 @@
+TLS setup notes - Mac 2 (Jagruthi), nginx edge
+==============================================
+Edge IP (ZeroTier): 10.239.23.87
+Domains served:     app.dmjl.test, api.dmjl.test
+
+Certificate
+- Root CA:       dmjl_port Local CA (rootCA.pem, created 4 Oct 2026)
+- Server cert:   CN=app.dmjl.test, SAN = app.dmjl.test, api.dmjl.test
+- Validity:      4 Oct 2026 -> 4 Oct 2027
+- Issued by the team root CA; verified with:
+    openssl verify -CAfile ~/dmjl/rootCA.pem ~/dmjl-certs/app.dmjl.test.pem  -> OK
+- Installed at /opt/homebrew/etc/nginx/certs/ (key file is private, mode 600)
+
+nginx TLS configuration
+- listen 443 ssl; ssl_protocols TLSv1.2 TLSv1.3
+- Port 80 redirects to HTTPS
+- TLS terminates at this edge; requests are proxied over plain HTTP to the
+  upstream pool (round robin, max_fails=1 fail_timeout=10s):
+    Backend A  10.239.23.127:3001  (Mac 3)
+    Backend B  10.239.23.49:3002   (Mac 4)
+
+Verification
+- curl -v https://app.dmjl.test/api/status (no -k) negotiates TLS 1.3,
+  reports "SSL certificate verify ok" and returns HTTP 200.
+- Clients must trust rootCA.pem; a client without it fails the handshake
+  (unknown CA alert), which is the failure seen in the Oct 4 capture.
