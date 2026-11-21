@@ -1,0 +1,16 @@
+07 nginx A/B load balancing - Lalith Mac 4 client
+$ date
+Sat Nov 21 21:10:33 IST 2026
+$ for i in {1..6}; do curl -sS -D - -o /dev/null https://app.dmjl.test/api/status | grep -Ei "HTTP/|X-Backend"; done
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: A
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: A
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: A

@@ -1,0 +1,23 @@
+08 HTTP caching: ETag / Cache-Control / conditional 304 - Lalith Mac 4 client
+$ date
+Sat Nov 21 21:10:41 IST 2026
+$ curl -sSI https://app.dmjl.test/api/status
+HTTP/1.1 200 OK
+Server: nginx/1.31.6
+Date: Sat, 21 Nov 2026 15:40:42 GMT
+Content-Type: application/json
+Content-Length: 32
+Connection: keep-alive
+X-Backend: B
+Cache-Control: public, max-age=60
+ETag: "status-v1"
+
+$ curl -sSI -H 'If-None-Match: "status-v1"' https://app.dmjl.test/api/status
+HTTP/1.1 304 Not Modified
+Server: nginx/1.31.6
+Date: Sat, 21 Nov 2026 15:40:43 GMT
+Connection: keep-alive
+X-Backend: A
+Cache-Control: public, max-age=60
+ETag: "status-v1"
+

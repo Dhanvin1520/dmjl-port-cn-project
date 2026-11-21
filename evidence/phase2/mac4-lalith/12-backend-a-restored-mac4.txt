@@ -1,0 +1,21 @@
+Step 4 recovery - Backend A restarted by Chaitanya (Mac 3) - Lalith Mac 4 client
+$ curl http://10.239.23.127:3001/api/status   (Backend A direct)
+HTTP/1.0 200 OK
+X-Backend: A
+
+(waited 15 s for nginx fail_timeout)
+$ date
+Sat Nov 21 21:09:15 IST 2026
+$ for i in {1..6}; do curl -sS -D - -o /dev/null https://app.dmjl.test/api/status | grep -Ei "HTTP/|X-Backend"; done
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: A
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: A
+HTTP/1.1 200 OK
+X-Backend: B

@@ -1,0 +1,45 @@
+$ date
+Sat Nov 21 20:36:48 IST 2026
+$ route -n get 10.239.23.157 | grep interface
+  interface: feth2917
+$ ping -c 4 10.239.23.157
+PING 10.239.23.157 (10.239.23.157): 56 data bytes
+64 bytes from 10.239.23.157: icmp_seq=0 ttl=64 time=25.822 ms
+64 bytes from 10.239.23.157: icmp_seq=1 ttl=64 time=23.998 ms
+64 bytes from 10.239.23.157: icmp_seq=2 ttl=64 time=17.328 ms
+64 bytes from 10.239.23.157: icmp_seq=3 ttl=64 time=36.216 ms
+
+--- 10.239.23.157 ping statistics ---
+4 packets transmitted, 4 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 17.328/25.841/36.216/6.773 ms
+
+$ date
+Sat Nov 21 20:36:52 IST 2026
+$ route -n get 10.239.23.127 | grep interface
+  interface: feth2917
+$ ping -c 4 10.239.23.127
+PING 10.239.23.127 (10.239.23.127): 56 data bytes
+64 bytes from 10.239.23.127: icmp_seq=0 ttl=64 time=20.663 ms
+64 bytes from 10.239.23.127: icmp_seq=1 ttl=64 time=18.854 ms
+64 bytes from 10.239.23.127: icmp_seq=2 ttl=64 time=8.115 ms
+64 bytes from 10.239.23.127: icmp_seq=3 ttl=64 time=6.088 ms
+
+--- 10.239.23.127 ping statistics ---
+4 packets transmitted, 4 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 6.088/13.430/20.663/6.401 ms
+
+$ date
+Sat Nov 21 20:36:55 IST 2026
+$ route -n get 10.239.23.87 | grep interface
+  interface: feth2917
+$ ping -c 4 10.239.23.87
+PING 10.239.23.87 (10.239.23.87): 56 data bytes
+64 bytes from 10.239.23.87: icmp_seq=0 ttl=64 time=262.668 ms
+64 bytes from 10.239.23.87: icmp_seq=1 ttl=64 time=267.403 ms
+64 bytes from 10.239.23.87: icmp_seq=2 ttl=64 time=261.912 ms
+64 bytes from 10.239.23.87: icmp_seq=3 ttl=64 time=267.464 ms
+
+--- 10.239.23.87 ping statistics ---
+4 packets transmitted, 4 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 261.912/264.862/267.464/2.586 ms
+

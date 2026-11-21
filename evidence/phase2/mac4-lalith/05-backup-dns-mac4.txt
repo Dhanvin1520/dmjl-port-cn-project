@@ -1,0 +1,49 @@
+$ date
+Sat Nov 21 20:55:11 IST 2026
+
+$ cat ~/dmjl-phase2/dnsmasq.conf   (backup DNS on Mac 4)
+port=53
+interface=feth2917
+listen-address=10.239.23.49
+bind-interfaces
+no-resolv
+local=/dmjl.test/
+address=/app.dmjl.test/10.239.23.87
+address=/api.dmjl.test/10.239.23.87
+local-ttl=30
+log-queries
+
+$ dig @10.239.23.49 app.dmjl.test   (Lalith backup DNS)
+; <<>> DiG 9.10.6 <<>> @10.239.23.49 app.dmjl.test +noall +comments +question +answer +stats
+; (1 server found)
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 23835
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+;; QUESTION SECTION:
+;app.dmjl.test.			IN	A
+;; ANSWER SECTION:
+app.dmjl.test.		30	IN	A	10.239.23.87
+;; Query time: 2 msec
+;; SERVER: 10.239.23.49#53(10.239.23.49)
+
+$ dig @10.239.23.157 app.dmjl.test   (Dhanvin primary DNS, for comparison)
+; <<>> DiG 9.10.6 <<>> @10.239.23.157 app.dmjl.test +noall +comments +question +answer +stats
+; (1 server found)
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 50515
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+;; QUESTION SECTION:
+;app.dmjl.test.			IN	A
+;; ANSWER SECTION:
+app.dmjl.test.		30	IN	A	10.239.23.87
+;; Query time: 34 msec
+;; SERVER: 10.239.23.157#53(10.239.23.157)
+
+$ cat /etc/resolver/dmjl.test
+nameserver 10.239.23.157
+nameserver 10.239.23.49
+
+$ dscacheutil -q host -a name app.dmjl.test
+name: app.dmjl.test
+ip_address: 10.239.23.87
+

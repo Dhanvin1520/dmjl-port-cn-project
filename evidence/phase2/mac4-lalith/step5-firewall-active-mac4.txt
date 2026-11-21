@@ -1,0 +1,38 @@
+Step 5 - Backend B firewall on Mac 4 (only nginx edge 10.239.23.87 may reach 10.239.23.49:3002)
+$ date
+Sat Nov 21 21:14:03 IST 2026
+
+$ sudo pfctl -s info | grep Status   (before)
+Status: Disabled for 1 days 10:46:37          Debug: Urgent
+
+$ sudo pfctl -sr | grep com.apple   (parent anchor present)
+scrub-anchor "com.apple/*" all fragment reassemble
+anchor "com.apple/*" all
+
+$ sudo pfctl -a com.apple/dmjl-phase2 -sr   (child anchor before - should be empty)
+
+$ cat ~/dmjl-phase2/backend-b.pf
+pass in quick on feth2917 inet proto tcp from 10.239.23.87 to 10.239.23.49 port 3002
+block in quick on feth2917 inet proto tcp from any to 10.239.23.49 port 3002
+
+$ sudo pfctl -n -a com.apple/dmjl-phase2 -f ~/dmjl-phase2/backend-b.pf   (syntax check)
+pfctl: Use of -f option, could result in flushing of rules
+present in the main ruleset added by the system at startup.
+See /etc/pf.conf for further details.
+
+exit=0
+
+$ sudo pfctl -a com.apple/dmjl-phase2 -f ~/dmjl-phase2/backend-b.pf   (load)
+pfctl: Use of -f option, could result in flushing of rules
+present in the main ruleset added by the system at startup.
+See /etc/pf.conf for further details.
+
+
+$ sudo pfctl -E   (PF was disabled; token saved privately in ~/dmjl-phase2/pf-token.txt, not in evidence)
+
+$ sudo pfctl -s info | grep Status   (after)
+Status: Enabled for 0 days 00:00:00           Debug: Urgent
+
+$ sudo pfctl -a com.apple/dmjl-phase2 -sr   (active rules)
+pass in quick on feth2917 inet proto tcp from 10.239.23.87 to 10.239.23.49 port = 3002 flags S/SA keep state
+block drop in quick on feth2917 inet proto tcp from any to 10.239.23.49 port = 3002

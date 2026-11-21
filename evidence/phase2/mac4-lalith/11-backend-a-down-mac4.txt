@@ -1,0 +1,39 @@
+Step 4 baseline (before Backend A stopped) - Lalith Mac 4 client
+$ date
+Sat Nov 21 21:06:16 IST 2026
+$ for i in {1..6}; do curl -sS -D - -o /dev/null https://app.dmjl.test/api/status | grep -Ei "HTTP/|X-Backend"; done
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: A
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: A
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: A
+
+=== Backend A stopped by Chaitanya (Mac 3) ===
+$ date
+Sat Nov 21 21:07:45 IST 2026
+$ for i in {1..6}; do curl -sS -D - -o /dev/null https://app.dmjl.test/api/status | grep -Ei "HTTP/|X-Backend"; done
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: B
+
+$ dig @10.239.23.157 app.dmjl.test +short
+10.239.23.87
+$ curl --connect-timeout 3 http://10.239.23.127:3001/api/status   (Backend A direct)
+curl: (7) Failed to connect to 10.239.23.127 port 3001 after 1009 ms: Couldn't connect to server
+HTTP=000

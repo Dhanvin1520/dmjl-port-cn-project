@@ -1,0 +1,35 @@
+$ date
+Sat Nov 21 20:36:58 IST 2026
+
+$ git rev-parse --short HEAD
+3bb1c59
+
+Started with: python3 backend/server.py B 3002
+
+$ lsof -nP -iTCP:3002 -sTCP:LISTEN
+COMMAND   PID              USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+Python  12083 kasulalalithendra    3u  IPv4 0x11689bf14088efe9      0t0  TCP *:3002 (LISTEN)
+
+$ curl -i http://10.239.23.49:3002/api/status
+HTTP/1.0 200 OK
+Server: dmjl-backend/1.0 Python/3.14.3
+Date: Sat, 21 Nov 2026 15:06:58 GMT
+Content-Type: application/json
+X-Backend: B
+Cache-Control: public, max-age=60
+ETag: "status-v1"
+Content-Length: 32
+
+{"backend": "B", "status": "ok"}
+
+--- Backend B server log: requests from teammates' Macs over ZeroTier ---
+Backend B listening on 0.0.0.0:3002
+10.239.23.157 - - [21/Nov/2026 20:35:56] "GET /api/status HTTP/1.1" 200 -
+10.239.23.87 - - [21/Nov/2026 20:36:00] "GET /api/status HTTP/1.1" 200 -
+10.239.23.87 - - [21/Nov/2026 20:36:03] "GET /api/status HTTP/1.1" 200 -
+10.239.23.87 - - [21/Nov/2026 20:36:14] "GET /api/status HTTP/1.1" 200 -
+10.239.23.87 - - [21/Nov/2026 20:36:27] "GET /api/status HTTP/1.1" 200 -
+10.239.23.87 - - [21/Nov/2026 20:36:28] "GET /api/status HTTP/1.1" 200 -
+10.239.23.87 - - [21/Nov/2026 20:36:30] "GET /api/status HTTP/1.1" 200 -
+10.239.23.87 - - [21/Nov/2026 20:36:31] "GET /api/status HTTP/1.1" 200 -
+10.239.23.87 - - [21/Nov/2026 20:36:32] "GET /api/status HTTP/1.1" 200 -

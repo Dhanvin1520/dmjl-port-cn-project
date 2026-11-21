@@ -1,0 +1,18 @@
+$ date
+Sat Nov 21 20:36:48 IST 2026
+
+$ zerotier-cli info
+200 info 4d23725660 1.16.2 ONLINE
+
+$ zerotier-cli listnetworks   (network ID redacted - join detail)
+200 listnetworks <nwid> <name> <mac> <status> <type> <dev> <ZT assigned ips>
+200 listnetworks <network-id-redacted> CN_Project 72:3f:86:a0:63:c8 OK PRIVATE feth2917 10.239.23.49/24
+
+$ ifconfig feth2917
+feth2917: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 5000 mtu 2800
+	options=8<VLAN_HWTAGGING>
+	ether 72:3f:86:a0:63:c8
+	inet 10.239.23.49 netmask 0xffffff00 broadcast 10.239.23.255
+	peer: feth7917
+	media: autoselect (10Gbase-T <full-duplex>)
+	status: active

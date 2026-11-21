@@ -1,0 +1,31 @@
+Lalith - Mac 4 backup DNS (10.239.23.49:53) log during primary-DNS failure test (step 3)
+Log captured: Sat Nov 21 21:02:18 IST 2026
+Primary DNS 10.239.23.157 check at capture time: ;; connection timed out; no servers could be reached
+Chaitanya (Mac 3) = 10.239.23.127; Dhanvin (primary) = 10.239.23.157; Jagruthi (edge) = 10.239.23.87
+
+== Lalith backup DNS (Mac 4, 10.239.23.49:53) ==
+dnsmasq[22701]: started, version 2.93 cachesize 150
+dnsmasq[22701]: compile time options: IPv6 GNU-getopt no-DBus no-UBus no-i18n no-IDN DHCP DHCPv6 no-Lua TFTP no-conntrack no-ipset no-nftset auth no-DNSSEC loop-detect no-inotify dumpfile
+dnsmasq[22701]: warning: no upstream servers configured
+dnsmasq[22701]: using only locally-known addresses for dmjl.test
+dnsmasq[22701]: read /etc/hosts - 3 names
+dnsmasq[22701]: query[A] app.dmjl.test from 10.239.23.157
+dnsmasq[22701]: config app.dmjl.test is 10.239.23.87
+dnsmasq[22701]: query[SVCB] _dns.resolver.arpa from 10.239.23.157
+dnsmasq[22701]: config error is REFUSED (EDE: not ready)
+dnsmasq[22701]: query[A] app.dmjl.test from 10.239.23.49
+dnsmasq[22701]: config app.dmjl.test is 10.239.23.87
+dnsmasq[22701]: query[SVCB] _dns.resolver.arpa from 10.239.23.87
+dnsmasq[22701]: config error is REFUSED (EDE: not ready)
+dnsmasq[22701]: query[A] app.dmjl.test from 10.239.23.87
+dnsmasq[22701]: config app.dmjl.test is 10.239.23.87
+dnsmasq[22701]: query[A] app.dmjl.test from 10.239.23.157
+dnsmasq[22701]: config app.dmjl.test is 10.239.23.87
+dnsmasq[22701]: query[A] app.dmjl.test from 10.239.23.87
+dnsmasq[22701]: config app.dmjl.test is 10.239.23.87
+dnsmasq[22701]: query[AAAA] app.dmjl.test from 10.239.23.127
+dnsmasq[22701]: config app.dmjl.test is NXDOMAIN
+dnsmasq[22701]: query[SVCB] _dns.resolver.arpa from 10.239.23.127
+dnsmasq[22701]: config error is REFUSED (EDE: not ready)
+dnsmasq[22701]: query[A] app.dmjl.test from 10.239.23.127
+dnsmasq[22701]: config app.dmjl.test is 10.239.23.87

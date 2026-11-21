@@ -1,0 +1,16 @@
+Step 5 rollback - Backend B firewall on Mac 4
+$ date
+Sat Nov 21 21:20:16 IST 2026
+
+$ sudo pfctl -a com.apple/dmjl-phase2 -F rules
+rules cleared
+
+$ sudo pfctl -a com.apple/dmjl-phase2 -sr   (should be empty)
+
+$ sudo pfctl -X <our token>   (release the PF enable token we acquired; token not shown)
+No ALTQ support in kernel
+ALTQ related functions disabled
+pf disabled
+
+$ sudo pfctl -s info | grep Status   (after)
+Status: Disabled for 0 days 00:00:00          Debug: Urgent
