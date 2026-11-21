@@ -1,0 +1,19 @@
+Phase 2 - Mac 1 inventory
+Captured: 2026-11-21 IST
+
+Owner: Dhanvin
+Role: Primary DNS and independent client
+Git revision: 3bb1c59
+Git identity: Dhanvin1520 <dhanvin.vadlamudi269@gmail.com>
+ZeroTier network: CN_Project (network ID retained in private team inventory)
+ZeroTier device ID: retained in private team inventory
+ZeroTier interface: feth2917
+ZeroTier IPv4: 10.239.23.157/24
+
+Observed authorized peer addresses: 10.239.23.127 and 10.239.23.49.
+Device IDs are retained in the private team inventory rather than this public repository.
+
+All four roles are now mapped:
+- Jagruthi / Mac 2 / primary edge: 10.239.23.87
+- Chaitanya / Mac 3 / Backend A: 10.239.23.127
+- Lalith / Mac 4 / Backend B and backup DNS: 10.239.23.49

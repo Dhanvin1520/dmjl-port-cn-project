@@ -1,0 +1,10 @@
+$ ping -c 3 10.239.23.87
+PING 10.239.23.87 (10.239.23.87): 56 data bytes
+64 bytes from 10.239.23.87: icmp_seq=0 ttl=64 time=266.692 ms
+64 bytes from 10.239.23.87: icmp_seq=1 ttl=64 time=253.178 ms
+64 bytes from 10.239.23.87: icmp_seq=2 ttl=64 time=252.690 ms
+
+3 packets transmitted, 3 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 252.690/257.520/266.692/6.489 ms
+
+Result: PASS - Jagruthi is reachable through ZeroTier.

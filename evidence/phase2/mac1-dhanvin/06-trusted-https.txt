@@ -1,0 +1,22 @@
+Phase 2 - HTTPS certificate verification
+Captured: 2026-11-21 19:52 IST
+
+Command used certificate validation with the project CA; no -k flag was used.
+
+$ curl --cacert rootCA.pem --resolve app.dmjl.test:443:10.239.23.87 \
+    -v https://app.dmjl.test/api/status
+
+Connected to app.dmjl.test (10.239.23.87) port 443
+subject: CN=app.dmjl.test
+issuer: CN=dmjl_port Local CA
+SSL certificate verify ok.
+HTTP/1.1 200 OK
+X-Backend: A
+{"backend": "A", "status": "ok"}
+
+The edge certificate also passed:
+openssl verify -CAfile rootCA.pem edge-leaf.pem
+edge-leaf.pem: OK
+
+Result: PASS with explicit project CA. System-wide CA trust installation on
+this Mac remains pending.

@@ -1,0 +1,10 @@
+$ ping -c 3 10.239.23.49
+PING 10.239.23.49 (10.239.23.49): 56 data bytes
+64 bytes from 10.239.23.49: icmp_seq=0 ttl=64 time=60.362 ms
+64 bytes from 10.239.23.49: icmp_seq=1 ttl=64 time=59.418 ms
+64 bytes from 10.239.23.49: icmp_seq=2 ttl=64 time=59.453 ms
+
+3 packets transmitted, 3 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 59.418/59.744/60.362/0.437 ms
+
+Result: PASS - Lalith is reachable through ZeroTier.

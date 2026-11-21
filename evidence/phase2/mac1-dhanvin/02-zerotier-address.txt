@@ -1,0 +1,15 @@
+Phase 2 - Dhanvin / Mac 1 ZeroTier address
+Captured: 2026-11-21 IST
+
+Interface: feth2917
+Status: active
+IPv4: 10.239.23.157
+Netmask: 255.255.255.0 (/24)
+
+Verified role inventory:
+- Mac 1 Dhanvin:   10.239.23.157 - primary DNS
+- Mac 2 Jagruthi:  10.239.23.87  - primary nginx edge
+- Mac 3 Chaitanya: 10.239.23.127 - Backend A :3001
+- Mac 4 Lalith:    10.239.23.49  - Backend B :3002 and backup DNS
+
+ZeroTier network and device IDs are retained in the private team inventory.

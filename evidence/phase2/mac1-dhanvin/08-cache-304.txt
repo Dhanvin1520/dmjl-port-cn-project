@@ -1,0 +1,17 @@
+Phase 2 - HTTP cache validation
+Captured: 2026-11-21 19:52 IST
+
+Initial HEAD response:
+HTTP/1.1 200 OK
+X-Backend: A
+Cache-Control: public, max-age=60
+ETag: "status-v1"
+
+Conditional request with If-None-Match: "status-v1":
+HTTP/1.1 304 Not Modified
+X-Backend: A
+Cache-Control: public, max-age=60
+ETag: "status-v1"
+
+Result: PASS. The cached representation can be revalidated without returning
+the response body.

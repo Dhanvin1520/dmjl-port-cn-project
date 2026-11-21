@@ -1,0 +1,15 @@
+Phase 2 - primary DNS verification
+Captured: 2026-11-21 19:51 IST
+
+$ dig @10.239.23.157 app.dmjl.test +noall +answer +comments
+status: NOERROR
+flags: qr aa rd ra
+app.dmjl.test.  30  IN  A  10.239.23.87
+
+$ dig @10.239.23.157 api.dmjl.test +noall +answer +comments
+status: NOERROR
+flags: qr aa rd ra
+api.dmjl.test.  30  IN  A  10.239.23.87
+
+Result: PASS. Primary DNS is authoritative for dmjl.test and returns Jagruthi's
+edge address with the required 30-second TTL.

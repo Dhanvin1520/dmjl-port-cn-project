@@ -1,0 +1,23 @@
+Phase 2 - Backend B recovery and A/B load balancing
+Captured: 2026-11-21 20:35 IST
+
+Lalith reachability:
+- 4 packets transmitted, 4 received, 0.0% packet loss
+- round-trip min/avg/max/stddev = 7.803/14.237/24.314/6.419 ms
+
+Direct Backend B check:
+- HTTP/1.0 200 OK
+- X-Backend: B
+- {"backend": "B", "status": "ok"}
+- TCP port 3002 connection succeeded
+
+Six HTTPS requests through Jagruthi's nginx:
+- request 1: HTTP/1.1 200 OK, X-Backend: A
+- request 2: HTTP/1.1 200 OK, X-Backend: A
+- request 3: HTTP/1.1 200 OK, X-Backend: B
+- request 4: HTTP/1.1 200 OK, X-Backend: A
+- request 5: HTTP/1.1 200 OK, X-Backend: B
+- request 6: HTTP/1.1 200 OK, X-Backend: A
+
+Result: PASS. Both backends are healthy and nginx distributes requests across
+Backend A and Backend B.
