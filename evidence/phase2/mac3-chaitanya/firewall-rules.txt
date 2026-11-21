@@ -1,0 +1,7 @@
+No ALTQ support in kernel
+ALTQ related functions disabled
+Status: Enabled for 0 days 00:00:33           Debug: Urgent
+No ALTQ support in kernel
+ALTQ related functions disabled
+pass in quick on feth2917 inet proto tcp from 10.239.23.87 to 10.239.23.127 port = 3001 flags S/SA keep state
+block drop in quick inet proto tcp from any to any port = 3001

@@ -1,0 +1,10 @@
+Chaitanya@H0Vers-Macbook dmjl-port-cn-project % python3 backend/server.py A 3001 
+Backend A listening on 0.0.0.0:3001
+10.239.23.49 - - [21/Nov/2026 21:09:15] "GET /api/status HTTP/1.1" 200 -
+10.239.23.87 - - [21/Nov/2026 21:09:19] "GET /api/status HTTP/1.1" 200 -
+10.239.23.87 - - [21/Nov/2026 21:09:22] "GET /api/status HTTP/1.1" 200 -
+10.239.23.87 - - [21/Nov/2026 21:10:32] "GET /api/status HTTP/1.1" 200 -
+10.239.23.87 - - [21/Nov/2026 21:10:35] "GET /api/status HTTP/1.1" 200 -
+10.239.23.87 - - [21/Nov/2026 21:10:38] "GET /api/status HTTP/1.1" 200 -
+10.239.23.87 - - [21/Nov/2026 21:10:40] "GET /api/status HTTP/1.1" 200 -
+10.239.23.87 - - [21/Nov/2026 21:10:43] "HEAD /api/status HTTP/1.1" 304 -

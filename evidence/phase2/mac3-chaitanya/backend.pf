@@ -1,0 +1,2 @@
+pass in quick on feth2917 inet proto tcp from 10.239.23.87 to 10.239.23.127 port 3001
+block in quick inet proto tcp from any to any port 3001

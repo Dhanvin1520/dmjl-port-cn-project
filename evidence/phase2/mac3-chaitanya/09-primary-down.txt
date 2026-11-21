@@ -1,0 +1,19 @@
+Sat Nov 21 21:05:23 IST 2026
+
+; <<>> DiG 9.10.6 <<>> @10.239.23.157 app.dmjl.test +time=1 +tries=1
+; (1 server found)
+;; global options: +cmd
+;; connection timed out; no servers could be reached
+name: app.dmjl.test
+ip_address: 10.239.23.87
+
+HTTP/1.1 200 OK
+Server: nginx/1.31.6
+Date: Sat, 21 Nov 2026 15:35:26 GMT
+Content-Type: application/json
+Content-Length: 32
+Connection: keep-alive
+X-Backend: A
+Cache-Control: public, max-age=60
+ETag: "status-v1"
+
