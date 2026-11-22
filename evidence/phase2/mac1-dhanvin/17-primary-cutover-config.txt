@@ -1,0 +1,11 @@
+# Phase 2 primary DNS - Dhanvin / Mac 1
+port=53
+interface=feth2917
+listen-address=10.239.23.157
+bind-interfaces
+no-resolv
+local=/dmjl.test/
+address=/app.dmjl.test/10.239.23.127
+address=/api.dmjl.test/10.239.23.87
+local-ttl=30
+log-queries

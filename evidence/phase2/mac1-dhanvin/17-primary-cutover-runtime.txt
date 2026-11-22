@@ -1,0 +1,41 @@
+dnsmasq[62263]: started, version 2.93 cachesize 150
+dnsmasq[62263]: compile time options: IPv6 GNU-getopt no-DBus no-UBus no-i18n no-IDN DHCP DHCPv6 no-Lua TFTP no-conntrack no-ipset no-nftset auth no-DNSSEC loop-detect no-inotify dumpfile
+dnsmasq[62263]: warning: no upstream servers configured
+dnsmasq[62263]: using only locally-known addresses for dmjl.test
+dnsmasq[62263]: read /etc/hosts - 3 names
+dnsmasq[62263]: query[A] app.dmjl.test from 10.239.23.157
+dnsmasq[62263]: config app.dmjl.test is 10.239.23.127
+dnsmasq[62263]: query[A] api.dmjl.test from 10.239.23.157
+dnsmasq[62263]: config api.dmjl.test is 10.239.23.87
+dnsmasq[62263]: query[A] app.dmjl.test from 10.239.23.87
+dnsmasq[62263]: config app.dmjl.test is 10.239.23.127
+dnsmasq[62263]: query[A] api.dmjl.test from 10.239.23.87
+dnsmasq[62263]: config api.dmjl.test is 10.239.23.87
+dnsmasq[62263]: query[A] app.dmjl.test from 10.239.23.157
+dnsmasq[62263]: config app.dmjl.test is 10.239.23.127
+dnsmasq[62263]: query[A] api.dmjl.test from 10.239.23.157
+dnsmasq[62263]: config api.dmjl.test is 10.239.23.87
+dnsmasq[62263]: query[A] app.dmjl.test from 10.239.23.49
+dnsmasq[62263]: config app.dmjl.test is 10.239.23.127
+dnsmasq[62263]: query[A] api.dmjl.test from 10.239.23.49
+dnsmasq[62263]: config api.dmjl.test is 10.239.23.87
+dnsmasq[62263]: query[A] app.dmjl.test from 10.239.23.49
+dnsmasq[62263]: config app.dmjl.test is 10.239.23.127
+dnsmasq[62263]: query[A] app.dmjl.test from 10.239.23.87
+dnsmasq[62263]: config app.dmjl.test is 10.239.23.127
+dnsmasq[62263]: query[HTTPS] app.dmjl.test from 10.239.23.157
+dnsmasq[62263]: config app.dmjl.test is NXDOMAIN
+dnsmasq[62263]: query[A] app.dmjl.test from 10.239.23.157
+dnsmasq[62263]: config app.dmjl.test is 10.239.23.127
+dnsmasq[62263]: query[SVCB] _dns.resolver.arpa from 10.239.23.157
+dnsmasq[62263]: config error is REFUSED (EDE: not ready)
+dnsmasq[62263]: query[A] app.dmjl.test from 10.239.23.49
+dnsmasq[62263]: config app.dmjl.test is 10.239.23.127
+dnsmasq[62263]: query[A] app.dmjl.test from 10.239.23.87
+dnsmasq[62263]: config app.dmjl.test is 10.239.23.127
+dnsmasq[62263]: query[A] app.dmjl.test from 10.239.23.87
+dnsmasq[62263]: config app.dmjl.test is 10.239.23.127
+dnsmasq[62263]: query[AAAA] app.dmjl.test from 10.239.23.87
+dnsmasq[62263]: config app.dmjl.test is NXDOMAIN
+dnsmasq[62263]: query[SVCB] _dns.resolver.arpa from 10.239.23.87
+dnsmasq[62263]: config error is REFUSED (EDE: not ready)

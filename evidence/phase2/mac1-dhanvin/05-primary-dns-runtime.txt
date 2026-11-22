@@ -1,0 +1,73 @@
+dnsmasq[63602]: started, version 2.93 cachesize 150
+dnsmasq[63602]: compile time options: IPv6 GNU-getopt no-DBus no-UBus no-i18n no-IDN DHCP DHCPv6 no-Lua TFTP no-conntrack no-ipset no-nftset auth no-DNSSEC loop-detect no-inotify dumpfile
+dnsmasq[63602]: warning: no upstream servers configured
+dnsmasq[63602]: using only locally-known addresses for dmjl.test
+dnsmasq[63602]: read /etc/hosts - 3 names
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.157
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[A] api.dmjl.test from 10.239.23.157
+dnsmasq[63602]: config api.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.49
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[A] api.dmjl.test from 10.239.23.49
+dnsmasq[63602]: config api.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.49
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.49
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.49
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[AAAA] app.dmjl.test from 10.239.23.49
+dnsmasq[63602]: config app.dmjl.test is NXDOMAIN
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.49
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[AAAA] app.dmjl.test from 10.239.23.49
+dnsmasq[63602]: config app.dmjl.test is NXDOMAIN
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.49
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.87
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.87
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.127
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.127
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[SVCB] _dns.resolver.arpa from 10.239.23.127
+dnsmasq[63602]: config error is REFUSED (EDE: not ready)
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.49
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[AAAA] app.dmjl.test from 10.239.23.49
+dnsmasq[63602]: config app.dmjl.test is NXDOMAIN
+dnsmasq[63602]: query[SVCB] _dns.resolver.arpa from 10.239.23.49
+dnsmasq[63602]: config error is REFUSED (EDE: not ready)
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.127
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.127
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[SVCB] _dns.resolver.arpa from 10.239.23.127
+dnsmasq[63602]: config error is REFUSED (EDE: not ready)
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.127
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.127
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.49
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.49
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.87
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[AAAA] app.dmjl.test from 10.239.23.87
+dnsmasq[63602]: config app.dmjl.test is NXDOMAIN
+dnsmasq[63602]: query[SVCB] _dns.resolver.arpa from 10.239.23.87
+dnsmasq[63602]: config error is REFUSED (EDE: not ready)
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.49
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[AAAA] app.dmjl.test from 10.239.23.49
+dnsmasq[63602]: config app.dmjl.test is NXDOMAIN
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.49
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.49
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87
+dnsmasq[63602]: query[A] app.dmjl.test from 10.239.23.87
+dnsmasq[63602]: config app.dmjl.test is 10.239.23.87

@@ -1,0 +1,1 @@
+dnsmasq: syntax check OK.
