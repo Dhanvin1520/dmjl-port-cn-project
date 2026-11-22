@@ -1,0 +1,38 @@
+23 Diagnosis - troubleshooting REHEARSAL (not the faculty-injected fault) - recorded by Lalith, Mac 4
+Sun Nov 22 16:50:44 IST 2026
+=== PRIMARY DNS ===
+10.239.23.87
+=== BACKUP DNS ===
+10.239.23.87
+=== NORMAL LOOKUP ===
+name: app.dmjl.test
+ip_address: 10.239.23.87
+
+=== EDGE PORT 443 ===
+10.239.23.87 443 (https) open
+=== HTTPS THROUGH NGINX ===
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: B
+=== DIRECT BACKEND A ===
+curl: (7) Failed to connect to 10.239.23.127 port 3001 after 1009 ms: Couldn't connect to server
+Backend-A HTTP=000
+=== DIRECT BACKEND B ===
+Backend-B HTTP=200
+
+=== RECORDER NOTES (Lalith) ===
+Last successful check : HTTPS through nginx - 6/6 HTTP 200, but every response X-Backend: B (A missing)
+First failed check    : Direct Backend A 10.239.23.127:3001 - connection refused, HTTP=000
+Layer                 : Application / backend service (Backend A process). DNS, edge (443), TLS and Backend B healthy.
+Diagnosis (Jagruthi)  : Backend A at 10.239.23.127:3001 is down. DNS, nginx and Backend B are healthy.
+                        "Connection refused" = host reachable but nothing listening on 3001 (not network/firewall).
+Fix                   : Chaitanya restarts Backend A on port 3001.

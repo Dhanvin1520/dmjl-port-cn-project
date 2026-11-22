@@ -1,0 +1,21 @@
+24 Restored - troubleshooting REHEARSAL (Backend A restarted by Chaitanya) - recorded by Lalith, Mac 4
+Sun Nov 22 16:55:01 IST 2026
+=== BACKEND A RESTORED ===
+Backend-A HTTP=200
+=== FINAL A/B LOAD BALANCING ===
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: A
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: A
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: A
+HTTP/1.1 200 OK
+X-Backend: B

@@ -1,0 +1,18 @@
+23 Baseline BEFORE the rehearsal fault - recorded by Lalith, Mac 4 (rehearsal, not the faculty-injected fault)
+Sun Nov 22 16:44:22 IST 2026
+=== DNS BASELINE ===
+10.239.23.87
+10.239.23.87
+=== HEALTHY A/B BASELINE ===
+HTTP/1.1 200 OK
+X-Backend: A
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: A
+HTTP/1.1 200 OK
+X-Backend: B
+HTTP/1.1 200 OK
+X-Backend: A
+HTTP/1.1 200 OK
+X-Backend: B

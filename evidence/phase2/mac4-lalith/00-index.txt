@@ -1,0 +1,26 @@
+Lalith - Mac 4 - Phase 2 evidence (original terminal text + matching .png screenshots)
+ZeroTier: 10.239.23.49 on feth2917   Role: Backend B :3002 + backup DNS :53
+Repo commit: 3bb1c59
+
+Test | Action | Expected | Observed | Files | Status
+02 | ZeroTier address | ONLINE, network OK, managed IP | ONLINE, OK PRIVATE, 10.239.23.49/24 on feth2917 | 02-zerotier-address-mac4.txt/.png | DONE
+03 | Ping M4 -> .157, .127, .87 via ZeroTier | 0% loss, interface feth2917 | 4/4 each, 0.0% loss, route via feth2917 | 03-pings-mac4.txt/.png | DONE
+04 | Backend B on :3002 reachable from team | HTTP 200, X-Backend: B | 200, X-Backend: B, ETag "status-v1"; log shows 200s from 10.239.23.157 and 10.239.23.87 | 04-backend-B-mac4.txt/.png | DONE
+05 | Backup DNS on 10.239.23.49:53 + scoped resolver | app.dmjl.test -> 10.239.23.87, TTL 30 | Backup and primary both answer 10.239.23.87 TTL 30 (NOERROR, aa); system lookup -> 10.239.23.87 | 05-backup-dns-mac4.txt/.png | DONE
+06 | Trusted HTTPS curl -v (no -k) | DNS -> M2, verify ok, 200 | 10.239.23.87:443, TLSv1.3, CN/SAN app.dmjl.test, issuer dmjl_port Local CA, SSL certificate verify ok, 200 | 06-trusted-https-mac4.txt/.png | DONE
+07 | nginx A/B load balancing, 6 HTTPS requests | 200, A and B alternate | 6/6 200: B,A,B,A,B,A | 07-load-balancing-mac4.txt/.png | DONE
+08 | Cache headers + conditional request | ETag, Cache-Control, 304 | ETag "status-v1", Cache-Control public max-age=60; If-None-Match -> 304 Not Modified | 08-cache-304-mac4.txt/.png | DONE
+10 | Backup DNS log while primary DNS (10.239.23.157) stopped | Chaitanya client query reaches backup | query[A] app.dmjl.test from 10.239.23.127 -> 10.239.23.87; primary timed out at capture | 10-backup-dns-log-mac4.txt/.png | DONE
+11 | Backend A stopped; 6 HTTPS requests from Mac 4 | all 200 from B, DNS still resolves | baseline B/A alternating; with A down 6/6 = 200 B; dig -> 10.239.23.87; A direct refused | 11-backend-a-down-mac4.txt/.png | DONE
+12 | Backend A restarted; wait 15 s; 6 HTTPS requests | A and B both return | A direct 200; loop 200 B,B,A,B,A,B | 12-backend-a-restored-mac4.txt/.png | DONE
+Step 5 | pf anchor com.apple/dmjl-phase2 on Mac 4: allow only 10.239.23.87 -> 10.239.23.49:3002, block others | rule active | PF enabled (was disabled; token kept private), pass + block drop rules active 21:14 IST | step5-firewall-active-mac4.txt/.png, backend-firewall-mac4.pf | DONE
+Step 5 rollback | flush anchor, release PF token | anchor empty, PF back to original state | rules cleared, anchor empty, pf disabled (as before) 21:20 IST | step5-firewall-rollback-mac4.txt/.png | DONE
+17 | Edge preflight (--resolve keeps hostname check, no -k) | both edges 200 | .87 nginx/1.31.6 200 (B); .127 nginx/1.31.9 200 (A) | 17-edge-preflight-mac4.txt/.png | DONE
+18 | Warm client during DNS cutover | .87 first, later .127 | 25 x edge=.87 while primary still .87 (15:57-15:58); after both DNS -> .127: 8 x edge=.127 (16:05-16:06), no manual flush | 18-warm-client-mac4.txt/.png | DONE
+19 | Manual flush after restore to .87 | after flush edge=.87 | both DNS .87; before flush already .87 (cached .127 expired, restore took > TTL 30 s); after flush .87, HTTP 200 | 19-manual-flush-mac4.txt/.png | DONE
+23 baseline | Healthy baseline before fault (Dhanvin step 2 commands) | both DNS .87, A and B both appear | 16:44 IST: DNS .87 x2; 6/6 HTTP 200 A,B,A,B,A,B | 23-baseline-mac4.txt/.png | DONE
+23 diagnosis | Rehearsal fault (Backend A stopped) diagnosis | DNS ok, 443 ok, all B, A refused | 16:50 IST: DNS .87 x2, lookup .87, 443 open, 6/6 200 all B, Backend-A HTTP=000 refused, Backend-B 200 | 23-diagnosis-mac4.txt/.png | DONE
+24 | Restore verification (Backend A restarted, waited 15 s) | A direct 200, loop A and B | 16:55 IST: Backend-A HTTP=200; 8/8 HTTP 200 with A and B | 24-restored-mac4.txt/.png | DONE
+
+Note: earlier in the session Mac 4's ZeroTier link fell back to a TCP relay (TUNNELED) on a managed Mac/network
+and became unreachable; resolved by changing network and restarting ZeroTier. All files above were captured after the fix (20:36 IST).

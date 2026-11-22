@@ -1,0 +1,31 @@
+17 Edge preflight - Lalith Mac 4 client (hostname verification kept, no -k)
+$ date
+Sun Nov 22 15:55:18 IST 2026
+
+Primary edge — Jagruthi
+$ curl -sS -i --resolve "app.dmjl.test:443:10.239.23.87" https://app.dmjl.test/api/status
+HTTP/1.1 200 OK
+Server: nginx/1.31.6
+Date: Sun, 22 Nov 2026 10:25:20 GMT
+Content-Type: application/json
+Content-Length: 32
+Connection: keep-alive
+X-Backend: B
+Cache-Control: public, max-age=60
+ETag: "status-v1"
+
+{"backend": "B", "status": "ok"}
+
+Standby edge — Chaitanya
+$ curl -sS -i --resolve "app.dmjl.test:443:10.239.23.127" https://app.dmjl.test/api/status
+HTTP/1.1 200 OK
+Server: nginx/1.31.9
+Date: Sun, 22 Nov 2026 10:25:24 GMT
+Content-Type: application/json
+Content-Length: 32
+Connection: keep-alive
+X-Backend: A
+Cache-Control: public, max-age=60
+ETag: "status-v1"
+
+{"backend": "A", "status": "ok"}

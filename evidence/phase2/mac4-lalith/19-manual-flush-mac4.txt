@@ -1,0 +1,31 @@
+19 Manual DNS cache flush after restoring app.dmjl.test -> 10.239.23.87 - Lalith Mac 4
+$ date
+Sun Nov 22 16:14:43 IST 2026
+
+DNS already restored:
+$ dig @10.239.23.157 app.dmjl.test +short
+10.239.23.87
+$ dig @10.239.23.49 app.dmjl.test +short
+10.239.23.87
+
+Before manual flush:
+$ dscacheutil -q host -a name app.dmjl.test
+name: app.dmjl.test
+ip_address: 10.239.23.87
+
+edge=10.239.23.87 HTTP=200
+
+Flush cache:
+$ sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
+
+After manual flush:
+$ dscacheutil -q host -a name app.dmjl.test
+name: app.dmjl.test
+ip_address: 10.239.23.87
+
+edge=10.239.23.87 HTTP=200
+$ date
+Sun Nov 22 16:14:51 IST 2026
+
+Observation: the restore of the backup DNS took longer than the 30 s TTL, so the cached .127 entry had already expired;
+the client was already on 10.239.23.87 before the flush. After the manual flush it resolves and connects to 10.239.23.87 (HTTP 200).

@@ -1,0 +1,77 @@
+18 Warm client - Lalith Mac 4 (ordinary curl, no --resolve, no -k)
+Before cutover: both DNS servers answer app.dmjl.test -> 10.239.23.87 (TTL 30)
+$ for i in {1..25}; do date "+%T"; curl -sS --connect-timeout 3 -o /dev/null -w "edge=%{remote_ip} HTTP=%{http_code}
+" https://app.dmjl.test/api/status; sleep 2; done
+15:57:24
+edge=10.239.23.87 HTTP=200
+15:57:27
+edge=10.239.23.87 HTTP=200
+15:57:31
+edge=10.239.23.87 HTTP=200
+15:57:35
+edge=10.239.23.87 HTTP=200
+15:57:39
+edge=10.239.23.87 HTTP=200
+15:57:42
+edge=10.239.23.87 HTTP=200
+15:57:46
+edge=10.239.23.87 HTTP=200
+15:57:50
+edge=10.239.23.87 HTTP=200
+15:57:53
+edge=10.239.23.87 HTTP=200
+15:57:57
+edge=10.239.23.87 HTTP=200
+15:58:00
+edge=10.239.23.87 HTTP=200
+15:58:04
+edge=10.239.23.87 HTTP=200
+15:58:07
+edge=10.239.23.87 HTTP=200
+15:58:11
+edge=10.239.23.87 HTTP=200
+15:58:15
+edge=10.239.23.87 HTTP=200
+15:58:20
+edge=10.239.23.87 HTTP=200
+15:58:24
+edge=10.239.23.87 HTTP=200
+15:58:27
+edge=10.239.23.87 HTTP=200
+15:58:31
+edge=10.239.23.87 HTTP=200
+15:58:35
+edge=10.239.23.87 HTTP=200
+15:58:38
+edge=10.239.23.87 HTTP=200
+15:58:42
+edge=10.239.23.87 HTTP=200
+15:58:45
+edge=10.239.23.87 HTTP=200
+15:58:49
+edge=10.239.23.87 HTTP=200
+15:58:53
+edge=10.239.23.87 HTTP=200
+
+=== After both DNS servers switched (backup 15:58 IST, primary fixed shortly after) ===
+$ dig @10.239.23.157 app.dmjl.test +short ; dig @10.239.23.49 app.dmjl.test +short
+10.239.23.127
+10.239.23.127
+$ same loop, 8 iterations (no cache flush on this warm client)
+16:05:51
+edge=10.239.23.127 HTTP=200
+16:05:53
+edge=10.239.23.127 HTTP=200
+16:05:55
+edge=10.239.23.127 HTTP=200
+16:05:57
+edge=10.239.23.127 HTTP=200
+16:05:59
+edge=10.239.23.127 HTTP=200
+16:06:01
+edge=10.239.23.127 HTTP=200
+16:06:03
+edge=10.239.23.127 HTTP=200
+16:06:05
+edge=10.239.23.127 HTTP=200
+Observation: the warm client kept using 10.239.23.87 while the primary DNS still answered .87 (first loop). After both DNS servers answered .127 it reached 10.239.23.127 with no manual cache flush (TTL 30).

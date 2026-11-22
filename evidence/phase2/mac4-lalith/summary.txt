@@ -1,0 +1,83 @@
+DMJL Port - Phase 2 - Lalith (Mac 4) evidence summary
+=====================================================
+
+Role:        Backend B (HTTP :3002) + backup DNS (dnsmasq :53) + test client
+ZeroTier:    10.239.23.49 on feth2917 (network CN_Project, PRIVATE; network ID not included)
+Repo commit: 3bb1c59
+Dates:       21 Nov 2026 (tests 02-12, step 5) and 22 Nov 2026 (step 6: tests 17-19; step 8: 23-24), IST
+
+Team addresses used
+  Dhanvin   Mac 1  10.239.23.157  primary DNS
+  Jagruthi  Mac 2  10.239.23.87   nginx HTTPS edge
+  Chaitanya Mac 3  10.239.23.127  Backend A :3001 + standby edge
+  Lalith    Mac 4  10.239.23.49   Backend B :3002 + backup DNS
+
+Results (every test has a matching .txt and .png)
+  02  ZeroTier address        ONLINE, network OK, 10.239.23.49/24 on feth2917.
+  03  Pings                   .157, .127, .87: 4/4 replies each, 0% loss, routed via feth2917.
+  04  Backend B               python3 backend/server.py B 3002; HTTP 200, X-Backend: B;
+                              server log shows 200s from teammates .157 and .87.
+  05  Backup DNS              app/api.dmjl.test -> 10.239.23.87, TTL 30, matches primary;
+                              /etc/resolver/dmjl.test lists .157 then .49; system lookup -> .87.
+  06  Trusted HTTPS           curl -v without -k: TLSv1.3, CN/SAN app.dmjl.test,
+                              issuer dmjl_port Local CA, "SSL certificate verify ok", HTTP 200.
+  07  Load balancing          6 requests: B, A, B, A, B, A (all 200).
+  08  HTTP caching            ETag "status-v1", Cache-Control public, max-age=60;
+                              If-None-Match -> 304 Not Modified.
+  10  Backup DNS failover     Primary DNS stopped (timed out); Chaitanya's client query
+                              arrived at the backup: query[A] app.dmjl.test from 10.239.23.127
+                              -> 10.239.23.87.
+  11  Backend A down          Baseline A/B; with A stopped 6/6 = 200 from B;
+                              DNS still resolved; Backend A direct connection refused.
+  12  Backend A restored      A direct 200; after 15 s the loop returned both A and B.
+  Step 5 firewall             pf anchor com.apple/dmjl-phase2 on Mac 4: only 10.239.23.87 may
+                              reach 10.239.23.49:3002, all others block drop. PF was disabled,
+                              enabled for the test (token kept private, not in this folder).
+  Step 5 rollback             Anchor rules flushed (empty), PF token released, PF back to
+                              Disabled as before.
+  17  Edge preflight          --resolve keeps hostname verification, no -k:
+                              .87 nginx/1.31.6 -> 200 (B); .127 nginx/1.31.9 -> 200 (A).
+  18  Warm client             First loop: 25 x edge=10.239.23.87 while the primary DNS still
+                              answered .87 (backup switched at 15:58, primary switched later).
+                              After both DNS servers answered .127: 8 x edge=10.239.23.127,
+                              with no manual flush.
+  19  Manual flush            Both DNS restored to .87. The restore took longer than the 30 s
+                              TTL, so the client was already on .87 before the flush; after
+                              the flush it resolves and connects to 10.239.23.87 (HTTP 200).
+  23  Rehearsal baseline      Healthy before the fault: both DNS .87; 6/6 HTTP 200, A and B.
+  23  Rehearsal diagnosis     Recorder for step 8 (fault introducer Dhanvin, diagnoser Jagruthi,
+                              restorer Chaitanya). DNS, lookup, edge 443 and HTTPS OK but every
+                              response from B; direct Backend A refused (HTTP 000), B 200.
+                              Diagnosis: Backend A at 10.239.23.127:3001 down. REHEARSAL only,
+                              not the faculty-injected fault.
+  24  Rehearsal restored      Backend A restarted; after 15 s direct A = 200 and 8/8 HTTP 200
+                              with both A and B.
+
+Issues met and how they were resolved
+  - 21 Nov: Mac 4's ZeroTier fell back to a TCP relay (TUNNELED) on a managed Mac/network and
+    became unreachable. The macOS firewall could not be changed (managed device). Resolved by
+    changing network and restarting ZeroTier; tests 02-04 were re-captured after the fix.
+  - Backup DNS "Address already in use": a copy was already running; no second instance needed.
+  - 22 Nov: Jagruthi's Mac reached Mac 4 only through a ZeroTier relay (~330 ms) but DNS
+    queries worked; confirmed in the backup DNS log.
+  - Step 6: the primary DNS initially still answered .87 after the backup switched; the warm
+    client therefore stayed on .87 until the primary was corrected. Recorded as observed.
+
+What I learned
+  A  DNS resilience: with two nameservers in /etc/resolver, clients keep resolving when the
+     primary stops; the backup log proves the query really moved.
+  B  TTL: a 30 s TTL means a client can keep using an old address for up to 30 s after a
+     change; a manual flush removes the cached answer immediately.
+  C  Backend isolation: a pf anchor can allow only the edge to reach a backend port, so
+     clients must go through nginx; rolling back means flushing only our own anchor.
+  D  Backend failure: nginx passive health checks route all traffic to the healthy backend and
+     add the failed one back after fail_timeout; the edge itself stays a single point of failure.
+  E  Edge migration: changing the DNS record moves new clients to the standby edge; cached
+     clients follow once their TTL expires.
+  F  Troubleshooting: checking layer by layer (DNS -> lookup -> edge port -> HTTPS -> backend
+     headers -> direct backends) isolates the fault quickly; the last passing check (HTTPS 200
+     but only B) and first failing check (A refused) point straight at the stopped Backend A.
+     "Connection refused" means the host is reachable but no service is listening.
+
+Privacy
+  No passwords, TLS private keys, PF tokens or ZeroTier network ID are included.
