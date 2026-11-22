@@ -1,0 +1,2 @@
+200 listnetworks <nwid> <name> <mac> <status> <type> <dev> <ZT assigned ips>
+200 listnetworks [REDACTED] CN_Project 72:65:3c:32:b9:21 OK PRIVATE feth2917 10.239.23.127/24
