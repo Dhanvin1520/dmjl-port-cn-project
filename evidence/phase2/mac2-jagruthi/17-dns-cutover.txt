@@ -1,0 +1,11 @@
+Sun Nov 22 16:06:33 IST 2026
+Primary DNS:
+10.239.23.127
+Backup DNS:
+10.239.23.127
+Normal lookup:
+name: app.dmjl.test
+ip_address: 10.239.23.127
+
+Ordinary HTTPS:
+edge=10.239.23.127 HTTP=200

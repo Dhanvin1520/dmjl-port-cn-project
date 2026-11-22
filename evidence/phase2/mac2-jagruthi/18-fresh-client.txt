@@ -1,0 +1,8 @@
+Sun Nov 22 16:06:33 IST 2026
+(cache flushed with: sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder)
+Normal lookup:
+name: app.dmjl.test
+ip_address: 10.239.23.127
+
+Ordinary HTTPS:
+edge=10.239.23.127 HTTP=200
