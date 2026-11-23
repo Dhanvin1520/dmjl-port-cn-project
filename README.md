@@ -8,6 +8,15 @@ A client resolves `app.dmjl.test` through our private local DNS server, establis
 
 ---
 
+## Final Report and Presentation
+
+| Deliverable | Path |
+|---|---|
+| **Final Report — Phase 1 + Phase 2 (PDF)** | [`report/dmjl_port_Final_Report.pdf`](report/dmjl_port_Final_Report.pdf) |
+| **Presentation (PPTX)** | [`report/dmjl_port_Presentation.pptx`](report/dmjl_port_Presentation.pptx) |
+
+The combined report covers both phases, including a failure-by-failure comparison of what Phase 2 improved. See [`report/README.md`](report/README.md).
+
 ## Phase 1 Deliverables Index
 
 All deliverables specified in **Section 9** and **Section 6** of the Course Project specification are documented and linked below:
@@ -29,8 +38,7 @@ Phase 2 ran on a private ZeroTier virtual LAN (`10.239.23.0/24`, approved by the
 
 | Deliverable | Repository Path | Description |
 |---|---|---|
-| **Phase 2 Final Report (PDF)** | [`docs/PHASE2_FINAL_REPORT.pdf`](docs/PHASE2_FINAL_REPORT.pdf) | Submission report: architecture, changes from Phase 1, results for Extensions A–F with evidence, troubleshooting findings, single point of failure, learning summary. Markdown version: [`docs/PHASE2_FINAL_REPORT.md`](docs/PHASE2_FINAL_REPORT.md). |
-| **Presentation Slides** | [`docs/PHASE2_SLIDES.pptx`](docs/PHASE2_SLIDES.pptx) | 11-slide deck for the final presentation: team, architecture, request flow, Phase 1 results, Phase 2 Extensions A–F, conclusion. |
+| **Phase 2 Report (detailed)** | [`docs/PHASE2_FINAL_REPORT.md`](docs/PHASE2_FINAL_REPORT.md) | Changes from Phase 1, results for Extensions A–F with evidence links, troubleshooting findings, learning summary per extension. |
 | **Architecture (Phase 2)** | [`ARCHITECTURE.md` §7](ARCHITECTURE.md#7-phase-2-topology--harden--recover) | ZeroTier topology, backup DNS, standby edge, firewall, remaining single point of failure. |
 | **Configuration (Phase 2)** | [`docs/CONFIGURATION_BUNDLE.md` §6](docs/CONFIGURATION_BUNDLE.md#6-phase-2-configuration) | Primary/backup/cutover DNS, client resolver, primary/standby nginx, pf rules with rollback. |
 | **Phase 2 Evidence** | [`evidence/phase2/README.md`](evidence/phase2/README.md) | Per-Mac evidence (terminal output + screenshots), Phase 2 packet capture, audit. |
@@ -237,6 +245,9 @@ wireshark/                         # Dedicated Wireshark DPI Gallery
 ├── C_bonus_http.png               # BONUS: Plaintext HTTP trace between edge & backend
 ├── dmjl_phase1_capture_v2_trusted.pcapng  # Re-capture after the client trusted the CA
 └── C3_tls_v2.png                  # Full TLS 1.3 handshake + encrypted request/response
+report/                            # Final submission
+├── dmjl_port_Final_Report.pdf     # Combined Phase 1 + Phase 2 report
+└── dmjl_port_Presentation.pptx    # Presentation slides
 ```
 
 ---
