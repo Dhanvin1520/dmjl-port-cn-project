@@ -29,7 +29,8 @@ Phase 2 ran on a private ZeroTier virtual LAN (`10.239.23.0/24`, approved by the
 
 | Deliverable | Repository Path | Description |
 |---|---|---|
-| **Phase 2 Final Report** | [`docs/PHASE2_FINAL_REPORT.md`](docs/PHASE2_FINAL_REPORT.md) | Changes from Phase 1, resilience results for Extensions A–F, troubleshooting findings, learning summary per extension. |
+| **Phase 2 Final Report (PDF)** | [`docs/PHASE2_FINAL_REPORT.pdf`](docs/PHASE2_FINAL_REPORT.pdf) | Submission report: architecture, changes from Phase 1, results for Extensions A–F with evidence, troubleshooting findings, single point of failure, learning summary. Markdown version: [`docs/PHASE2_FINAL_REPORT.md`](docs/PHASE2_FINAL_REPORT.md). |
+| **Presentation Slides** | [`docs/PHASE2_SLIDES.pptx`](docs/PHASE2_SLIDES.pptx) | 11-slide deck for the final presentation: team, architecture, request flow, Phase 1 results, Phase 2 Extensions A–F, conclusion. |
 | **Architecture (Phase 2)** | [`ARCHITECTURE.md` §7](ARCHITECTURE.md#7-phase-2-topology--harden--recover) | ZeroTier topology, backup DNS, standby edge, firewall, remaining single point of failure. |
 | **Configuration (Phase 2)** | [`docs/CONFIGURATION_BUNDLE.md` §6](docs/CONFIGURATION_BUNDLE.md#6-phase-2-configuration) | Primary/backup/cutover DNS, client resolver, primary/standby nginx, pf rules with rollback. |
 | **Phase 2 Evidence** | [`evidence/phase2/README.md`](evidence/phase2/README.md) | Per-Mac evidence (terminal output + screenshots), Phase 2 packet capture, audit. |
