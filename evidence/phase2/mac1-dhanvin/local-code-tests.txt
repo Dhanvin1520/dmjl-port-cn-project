@@ -1,0 +1,21 @@
+Phase 2 - local code preflight
+Captured: 2026-11-21 IST
+
+PASS: python3 -m py_compile backend/server.py
+PASS: bash -n for dns/start-dns.sh, dns/stop-dns.sh,
+      nginx/start-nginx.sh, tls/make-certs.sh and tls/trust-ca.sh
+PASS: dnsmasq syntax check using Mac 1 ZeroTier IP 10.239.23.157
+PASS: Backend A /api/status returned HTTP 200, X-Backend: A,
+      Cache-Control: public, max-age=60 and ETag: "status-v1"
+PASS: Backend B /api/status returned HTTP 200 and X-Backend: B
+PASS: If-None-Match: "status-v1" returned HTTP 304
+PASS: HEAD /api/status returned HTTP 200 without a body
+PASS: unknown endpoint returned HTTP 404 with backend identity
+
+ENVIRONMENT LIMITATION: dnsmasq's generated configuration passed its syntax
+check, but this Codex sandbox denied the macOS PF_ROUTE socket required to run
+dnsmasq. The real port-53 start and direct dig proof must be captured from an
+ordinary Terminal after the edge IP is mapped.
+
+These are local preflight tests. Live ZeroTier edge, backup DNS, firewall and
+failover tests still require the assigned services to be running on team Macs.

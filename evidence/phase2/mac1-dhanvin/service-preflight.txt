@@ -1,0 +1,21 @@
+Phase 2 - service preflight from Mac 1
+Captured: 2026-11-21 IST
+
+Peer 10.239.23.127:
+- TCP 53: connection refused
+- TCP 443: connection refused
+- TCP 3001: connection refused
+- TCP 3002: connection refused
+- UDP DNS query for app.dmjl.test: timed out
+- HTTPS app.dmjl.test:443 using --resolve: connection failed
+
+Peer 10.239.23.49:
+- TCP 53: connection refused
+- TCP 443: connection refused
+- TCP 3001: connection refused
+- TCP 3002: connection refused
+- UDP DNS query for app.dmjl.test: timed out
+- HTTPS app.dmjl.test:443 using --resolve: connection failed
+
+Interpretation: ZeroTier reachability passes, but the project services were not running
+on either peer during this test. These are preflight observations, not Phase 2 pass evidence.

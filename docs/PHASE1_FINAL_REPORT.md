@@ -24,7 +24,7 @@ A client types `https://app.dmjl.test`. Our private DNS server (Mac 1) resolves 
 
 | Machine | Person | Role | Service and port | Cloud equivalent |
 |---|---|---|---|---|
-| Mac 1 | Dhanvin Vadlamudi | Private DNS server | `dnsmasq`, UDP/TCP 53 | AWS Route 53 private hosted zone |
+| Mac 1 | Dhanvin Vadlamudi (Team Lead) | Private DNS server | `dnsmasq`, UDP/TCP 53 | AWS Route 53 private hosted zone |
 | Mac 2 | Jagruthi Pulumati | Edge reverse proxy, TLS termination, load balancer | `nginx`, TCP 80 (redirect) and 443 | AWS Application Load Balancer |
 | Mac 3 | Chaitanya Sai Meka | Backend A, Wireshark captures | Python REST, TCP 3001 | EC2 target A |
 | Mac 4 | Kasula Lalithendra | Backend B, test client | Python REST, TCP 3002 + `curl`/`dig` | EC2 target B + client |

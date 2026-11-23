@@ -24,3 +24,8 @@ Step 5 rollback | flush anchor, release PF token | anchor empty, PF back to orig
 
 Note: earlier in the session Mac 4's ZeroTier link fell back to a TCP relay (TUNNELED) on a managed Mac/network
 and became unreachable; resolved by changing network and restarting ZeroTier. All files above were captured after the fix (20:36 IST).
+
+Nov 23 repeat (DNS cache timing)
+18 repeat | Warm client forward cutover .87 -> .127 | both DNS .127 while warm client still .87, then .127 without flush | attempts 1-3 not usable (primary not switched in loop / switched early); attempt 4: 12:27:48 both DNS .127, client .87 (cached); 12:27:52 client .127, no flush | 18-warm-client-repeat-mac4.txt/.png | DONE
+19 repeat | Reverse .127 -> .87 + manual flush | before flush DNS .87 but client .127; after flush .87 HTTP 200 | attempt 1 missed window (cache expired); attempt 2: 12:21:15 both DNS .87, client .127; 12:21:16 after flush edge .87 HTTP 200 | 19-manual-flush-repeat-mac4.txt/.png | DONE
+backup-dns.conf | Working backup DNS config (app/api -> .87, TTL 30) | - | - | backup-dns.conf | INCLUDED

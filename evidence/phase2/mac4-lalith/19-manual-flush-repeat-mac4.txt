@@ -1,0 +1,28 @@
+19 Manual flush REPEAT - Lalith Mac 4 - 2026-11-23
+=== ATTEMPT 1 (missed cache window - saved as real result) ===
+Primary DNS restored to .87 at 12:10 IST (Dhanvin); backup restored to .87 at 12:11 IST (Lalith).
+Client last reached .127 at ~12:05 (end of warm-client retry loop), so its cached .127 had expired before the restore.
+12:11:01 IST  curl -> timed out (HTTP=000)
+12:11:18 IST  edge=10.239.23.87 HTTP=200
+12:11:20 IST  edge=10.239.23.87 HTTP=200
+dscacheutil -q host -a name app.dmjl.test -> ip_address: 10.239.23.87
+Result: client already on .87 before any flush -> timed flush to be redone.
+
+=== ATTEMPT 2: WARM CACHE ON STANDBY ===
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+2026-11-23 12:18:12 IST
+edge=10.239.23.127 HTTP=200
+(while waiting for both DNS to return .87, an HTTPS request every ~2 s kept the cache warm; not shown)
+=== BEFORE FLUSH ===
+2026-11-23 12:21:15 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.87
+edge=10.239.23.127 HTTP=200
+=== FLUSH START ===
+2026-11-23 12:21:16 IST
+=== AFTER FLUSH ===
+2026-11-23 12:21:16 IST
+edge=10.239.23.87 HTTP=200
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.87

@@ -1,4 +1,4 @@
-# dmjl_port — Computer Networks Project (Phase 1: Build & Observe)
+# dmjl_port — Computer Networks Project (Phase 1: Build & Observe · Phase 2: Harden & Recover)
 
 A private, distributed network platform built across **4 physical MacBook Pros on one LAN** (Submission Type 1). 
 
@@ -23,13 +23,24 @@ All deliverables specified in **Section 9** and **Section 6** of the Course Proj
 | **Course Topic Mapping** | [`docs/COURSE_TOPIC_MAPPING.md`](docs/COURSE_TOPIC_MAPPING.md) | Direct mapping of Section 6.1 lecture topics (TCP/IP, routing, transport ports, TLS, caching) to implementation code. |
 | **Evaluation Checklist** | [`docs/EVALUATION_CHECKLIST.md`](docs/EVALUATION_CHECKLIST.md) | 11-step demonstration walkthrough (Section 8) and 50-mark Review 1 rubric alignment. |
 
+## 🛡️ Phase 2 Deliverables Index (Harden & Recover)
+
+Phase 2 ran on a private ZeroTier virtual LAN (`10.239.23.0/24`, approved by the faculty) because one member was out of station. All services still run on the four team laptops.
+
+| Deliverable | Repository Path | Description |
+|---|---|---|
+| **Phase 2 Final Report** | [`docs/PHASE2_FINAL_REPORT.md`](docs/PHASE2_FINAL_REPORT.md) | Changes from Phase 1, resilience results for Extensions A–F, troubleshooting findings, learning summary per extension. |
+| **Architecture (Phase 2)** | [`ARCHITECTURE.md` §7](ARCHITECTURE.md#7-phase-2-topology--harden--recover) | ZeroTier topology, backup DNS, standby edge, firewall, remaining single point of failure. |
+| **Configuration (Phase 2)** | [`docs/CONFIGURATION_BUNDLE.md` §6](docs/CONFIGURATION_BUNDLE.md#6-phase-2-configuration) | Primary/backup/cutover DNS, client resolver, primary/standby nginx, pf rules with rollback. |
+| **Phase 2 Evidence** | [`evidence/phase2/README.md`](evidence/phase2/README.md) | Per-Mac evidence (terminal output + screenshots), Phase 2 packet capture, audit. |
+
 ---
 
 ## 👥 Engineering Team · Section C
 
 | Machine | Role | Name | GitHub Handle | Responsibility |
 |---|---|---|---|---|
-| **Mac 1** | **Private DNS & Project Lead** | **Dhanvin Vadlamudi** | [@Dhanvin1520](https://github.com/Dhanvin1520) | Private DNS server (`dnsmasq`), LAN routing, repository maintainer |
+| **Mac 1** | **Team Lead & Private DNS** | **Dhanvin Vadlamudi** | [@Dhanvin1520](https://github.com/Dhanvin1520) | Private DNS server (`dnsmasq`), LAN routing, repository maintainer |
 | **Mac 2** | **Edge & TLS Proxy** | **Jagruthi Pulumati** | [@Jag2007](https://github.com/Jag2007) | Edge reverse proxy (`nginx`), TLS 1.3 termination, Root CA issuance, video lead |
 | **Mac 3** | **Application Node A** | **Chaitanya Sai Meka** | [@ChaitanyaSai-Meka](https://github.com/ChaitanyaSai-Meka) | Backend A instance (`:3001`), Wireshark deep packet inspection (DPI) & captures |
 | **Mac 4** | **Application Node B & Test Client** | **Kasula Lalithendra** | [@Lalith0024](https://github.com/Lalith0024) | Backend B instance (`:3002`), primary client test suite, telemetry & failover evidence |
@@ -179,7 +190,7 @@ All project evidence collected during the live multi-node session is archived in
 ```
 evidence/
 ├── README.md                      # Comprehensive form-to-evidence mapping table
-├── ev_mac1/                       # Node 1: Dhanvin Vadlamudi (DNS Authority)
+├── ev_mac1/                       # Node 1: Dhanvin Vadlamudi (Team Lead, DNS Authority)
 │   ├── A1_mac1.txt                # Interface & IP configuration
 │   ├── A2_dnsmasq.txt             # Active dnsmasq runtime configuration
 │   ├── A5_pings_mac1.txt          # ICMP reachability verification (0.0% loss)

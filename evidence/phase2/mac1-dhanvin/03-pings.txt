@@ -1,0 +1,23 @@
+Phase 2 - Mac 1 ZeroTier reachability
+Captured: 2026-11-21 IST
+
+$ ping -c 4 10.239.23.127
+PING 10.239.23.127 (10.239.23.127): 56 data bytes
+64 bytes from 10.239.23.127: icmp_seq=0 ttl=64 time=22.361 ms
+64 bytes from 10.239.23.127: icmp_seq=1 ttl=64 time=5.836 ms
+64 bytes from 10.239.23.127: icmp_seq=2 ttl=64 time=10.150 ms
+64 bytes from 10.239.23.127: icmp_seq=3 ttl=64 time=8.635 ms
+4 packets transmitted, 4 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 5.836/11.745/22.361/6.321 ms
+
+$ ping -c 4 10.239.23.49
+PING 10.239.23.49 (10.239.23.49): 56 data bytes
+64 bytes from 10.239.23.49: icmp_seq=0 ttl=64 time=241.394 ms
+64 bytes from 10.239.23.49: icmp_seq=1 ttl=64 time=65.420 ms
+64 bytes from 10.239.23.49: icmp_seq=2 ttl=64 time=61.110 ms
+64 bytes from 10.239.23.49: icmp_seq=3 ttl=64 time=126.161 ms
+4 packets transmitted, 4 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 61.110/123.521/241.394/72.753 ms
+
+Result: PASS for both currently authorized peers.
+Pending: Mac 1 to fourth-Mac ping after that device joins the network.

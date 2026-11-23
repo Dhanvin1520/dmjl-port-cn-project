@@ -1,0 +1,12 @@
+# Phase 2 primary DNS template - Mac 1 / Dhanvin
+# Replace EDGE_ZT_IP with Jagruthi's verified ZeroTier IPv4 before starting.
+port=53
+interface=feth2917
+listen-address=10.239.23.157
+bind-interfaces
+no-resolv
+local=/dmjl.test/
+address=/app.dmjl.test/EDGE_ZT_IP
+address=/api.dmjl.test/EDGE_ZT_IP
+local-ttl=30
+log-queries

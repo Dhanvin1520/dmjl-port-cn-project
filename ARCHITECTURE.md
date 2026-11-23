@@ -1,9 +1,9 @@
-# Architecture Document — dmjl_port (Phase 1: Build & Observe)
+# Architecture Document — dmjl_port (Phase 1: Build & Observe · Phase 2: Harden & Recover)
 
 > **Course:** Computer Networks Course Project  
 > **Platform:** Private Network Service Platform  
 > **Deployment Model:** 4 Physical macOS Laptops on Private LAN (Submission Type 1)  
-> **Team:** Section C (Dhanvin Vadlamudi, Jagruthi Pulumati, Chaitanya Sai Meka, Kasula Lalithendra)  
+> **Team:** Section C (Dhanvin Vadlamudi — Team Lead, Jagruthi Pulumati, Chaitanya Sai Meka, Kasula Lalithendra)  
 
 ---
 
@@ -148,3 +148,52 @@ In modern cloud production systems, CPU-intensive cryptographic handshakes and p
 Our system implements this exact architecture:
 - **Public / Client Boundary:** Port 443 with TLS 1.3 encryption, protecting sensitive payloads over the air.
 - **Private Backend Boundary:** Ports 3001 & 3002 with unencrypted HTTP/1.0, verified live via packet analysis ([`C_bonus_http.png`](evidence/ev_mac3/C_bonus_http.png)).
+
+---
+
+## 7. Phase 2 Topology — Harden & Recover
+
+Phase 2 extends the Phase 1 system; nothing was rebuilt. Because one member was out of station, all four Macs joined a **private ZeroTier virtual LAN** (`10.239.23.0/24`, interface `feth2917`, MTU 2800), approved by the faculty. Every service still runs on our own laptops; nothing is hosted in the cloud.
+
+### 7.1 Node inventory (Phase 2)
+
+| Machine | Owner | ZeroTier IP | Phase 2 services | Phase 1 → Phase 2 change |
+|---|---|---|---|---|
+| Mac 1 | Dhanvin | `10.239.23.157` | Primary DNS (`dnsmasq`, UDP/TCP 53) | Bound to the ZeroTier interface |
+| Mac 2 | Jagruthi | `10.239.23.87` | **Primary nginx edge** (TCP 80 → 443, TLS) | Same config, new upstream IPs |
+| Mac 3 | Chaitanya | `10.239.23.127` | Backend A (TCP 3001) + **standby nginx edge** (TCP 443) | **New:** standby edge (Extension E); pf rule on 3001 (Extension C) |
+| Mac 4 | Lalith | `10.239.23.49` | Backend B (TCP 3002) + **backup DNS** (UDP/TCP 53) + test client | **New:** backup DNS (Extension A); pf rule on 3002 (Extension C) |
+
+DNS records on both servers: `app.dmjl.test` and `api.dmjl.test` → `10.239.23.87`, TTL 30 s. Clients resolve `dmjl.test` through the scoped resolver file `/etc/resolver/dmjl.test` (`nameserver 10.239.23.157`, then `nameserver 10.239.23.49`).
+
+### 7.2 Phase 2 diagram
+
+```mermaid
+flowchart LR
+    C[Client Mac] -- "DNS (1st) UDP 53" --> D1[Mac 1 · Primary DNS<br/>10.239.23.157]
+    C -. "DNS (backup) UDP 53" .-> D2[Mac 4 · Backup DNS<br/>10.239.23.49]
+    C -- "HTTPS 443" --> E1[Mac 2 · Primary nginx edge<br/>10.239.23.87]
+    C -. "HTTPS 443 after DNS cutover" .-> E2[Mac 3 · Standby nginx edge<br/>10.239.23.127]
+    E1 -- "HTTP 3001" --> A[Mac 3 · Backend A :3001]
+    E1 -- "HTTP 3002" --> B[Mac 4 · Backend B :3002]
+    E2 -.-> A
+    E2 -.-> B
+    C -. "direct 3001/3002 blocked by pf" .-x A
+```
+
+### 7.3 Resilience mechanisms
+
+| Extension | Mechanism | Where |
+|---|---|---|
+| A — Backup DNS | Second `dnsmasq` with identical records; client resolver lists both servers | Mac 1 + Mac 4 |
+| B — TTL & record change | `local-ttl=30`; record changed on both servers; client cache (`mDNSResponder`) honours TTL; manual flush | Mac 1, Mac 4, clients |
+| C — Service isolation | `pf` anchor: backend port reachable only from the edge `10.239.23.87`; rollback by flushing the anchor and releasing the pf token | Mac 3, Mac 4 |
+| D — Backend failover | nginx `max_fails=1 fail_timeout=10s`, default `proxy_next_upstream error timeout` | Mac 2 |
+| E — Edge migration | Standby nginx with identical config and certificate; DNS cutover `.87 → .127` and back | Mac 3 + both DNS servers |
+| F — Troubleshooting | Layer-by-layer diagnosis: `dig` → `ping` → `nc` → `curl -v` → `curl -si` | All |
+
+### 7.4 Remaining single point of failure
+
+The **primary nginx edge (Mac 2)** carries all client traffic. DNS has a backup and the backends are a pair, but if the edge fails, clients only move to the standby after a DNS change *and* after their cached answer (TTL 30 s) expires. Removing it needs two active edges behind one address — a shared virtual IP with VRRP/keepalived, or a load balancer/anycast in front, or health-checked DNS failover — the role a managed cloud load balancer (e.g. AWS ALB across availability zones) plays.
+
+Full Phase 2 results: [`docs/PHASE2_FINAL_REPORT.md`](docs/PHASE2_FINAL_REPORT.md). Phase 2 configurations: [`docs/CONFIGURATION_BUNDLE.md`](docs/CONFIGURATION_BUNDLE.md#6-phase-2-configuration).

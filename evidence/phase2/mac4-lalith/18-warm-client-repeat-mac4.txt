@@ -1,0 +1,418 @@
+18 Warm client REPEAT - Lalith Mac 4 - 2026-11-23
+=== BASELINE ===
+2026-11-23 11:50:15 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.87
+curl: (28) Failed to connect to app.dmjl.test port 443 after 2002 ms: Timeout was reached
+edge= HTTP=000
+=== EDGE PREFLIGHT (--resolve, cert verification on) ===
+edge=10.239.23.87 HTTP=200
+edge=10.239.23.127 HTTP=200
+=== FORWARD CUTOVER ===
+2026-11-23 11:51:34 IST
+11:51:34 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.87
+edge=10.239.23.87 HTTP=200
+11:51:38 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.87
+edge=10.239.23.87 HTTP=200
+11:51:42 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.87
+curl: (28) Operation timed out after 4006 milliseconds with 0 bytes received
+edge=10.239.23.87 HTTP=000
+11:51:48 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:51:54 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:51:58 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:52:02 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:52:07 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:52:11 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+curl: (28) Failed to connect to app.dmjl.test port 443 after 2006 ms: Timeout was reached
+edge= HTTP=000
+11:52:15 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:52:19 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:52:23 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:52:28 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+curl: (28) Operation timed out after 4006 milliseconds with 0 bytes received
+edge=10.239.23.87 HTTP=000
+11:52:34 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:52:39 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:52:43 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:52:48 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:52:52 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:52:56 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+curl: (28) Failed to connect to app.dmjl.test port 443 after 2003 ms: Timeout was reached
+edge= HTTP=000
+11:53:00 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:53:04 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+curl: (28) SSL connection timeout
+edge=10.239.23.87 HTTP=000
+11:53:08 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:53:13 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:53:17 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:53:21 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:53:25 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:53:30 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:53:34 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:53:38 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+11:53:43 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+
+=== FORWARD CUTOVER - RETRY (attempt 1 above: primary DNS was not switched during the loop) ===
+(no flush: client cache already warm on .87; backup DNS already on .127, primary switches during this loop)
+2026-11-23 12:03:41 IST
+12:03:41 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:03:43 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:03:46 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:03:48 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:03:50 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:03:52 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:03:54 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:03:56 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:03:58 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:00 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:03 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:05 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:07 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:09 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:11 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:13 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:16 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:18 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:20 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:22 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:24 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:26 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:29 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:31 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:33 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:35 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:37 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:39 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:41 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:04:44 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+
+=== FORWARD CUTOVER - ATTEMPT 3 (attempt 1: primary not switched during loop; attempt 2: primary switched before loop started) ===
+(no flush: client cache warm on .87; both DNS start on .87 and switch to .127 during this loop)
+2026-11-23 12:25:06 IST
+12:25:06 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.87
+curl: (28) Failed to connect to app.dmjl.test port 443 after 2006 ms: Timeout was reached
+edge= HTTP=000
+12:25:10 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:25:14 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:25:18 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:25:22 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:25:26 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:25:30 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:25:34 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:25:38 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:25:42 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:25:46 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:25:50 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:25:54 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:25:58 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+curl: (28) Operation timed out after 4006 milliseconds with 0 bytes received
+edge=10.239.23.87 HTTP=000
+12:26:04 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:26:09 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:26:13 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+curl: (28) Operation timed out after 4006 milliseconds with 0 bytes received
+edge=10.239.23.87 HTTP=000
+12:26:20 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+curl: (28) Failed to connect to app.dmjl.test port 443 after 2003 ms: Timeout was reached
+edge= HTTP=000
+12:26:24 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:26:29 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:26:33 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:26:37 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:26:41 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:26:45 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:26:49 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:26:53 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:26:57 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:27:01 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:27:05 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:27:09 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+
+=== FORWARD CUTOVER - ATTEMPT 4 (attempts 1 and 3: primary not switched during loop; attempt 2: switched before loop) ===
+(no flush; client warm on .87; backup already .127; loop runs until primary switches and client reaches .127 three times, max 90 rounds)
+2026-11-23 12:27:39 IST
+12:27:39 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.87
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:27:43 IST
+DNS 10.239.23.157: ;; connection timed out; no servers could be reached
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:27:48 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.87 HTTP=200
+12:27:52 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:27:55 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+12:27:57 IST
+DNS 10.239.23.157: app.dmjl.test.		30	IN	A	10.239.23.127
+DNS 10.239.23.49: app.dmjl.test.		30	IN	A	10.239.23.127
+edge=10.239.23.127 HTTP=200
+Observation (attempt 4): at 12:27:48 both DNS servers answered .127 while the warm client still reached 10.239.23.87 from its cache; at 12:27:52 it reached 10.239.23.127 with no manual flush. Occasional HTTP=000 lines are timeouts on the slow relayed link to the .87 edge.

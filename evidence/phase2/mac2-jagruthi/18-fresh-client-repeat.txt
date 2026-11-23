@@ -1,0 +1,17 @@
+12:00:58 IST
+=== BOTH DNS SERVERS ===
+
+; <<>> DiG 9.10.6 <<>> @10.239.23.157 app.dmjl.test A +noall +answer
+; (1 server found)
+;; global options: +cmd
+app.dmjl.test.		30	IN	A	10.239.23.127
+
+; <<>> DiG 9.10.6 <<>> @10.239.23.49 app.dmjl.test A +noall +answer
+; (1 server found)
+;; global options: +cmd
+app.dmjl.test.		30	IN	A	10.239.23.127
+=== FRESH CLIENT AFTER FLUSH ===
+name: app.dmjl.test
+ip_address: 10.239.23.127
+
+edge=10.239.23.127 HTTP=200
