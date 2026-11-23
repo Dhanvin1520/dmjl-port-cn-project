@@ -1,5 +1,7 @@
 # Screenshot review - 2026-11-21
 
+> Review written on 21 November. Retakes mentioned below were completed; the final accepted set and status are in [`../README.md`](../README.md).
+
 ## Accepted evidence
 
 - `01-members.png` - shows four total and four authorized ZeroTier devices. It

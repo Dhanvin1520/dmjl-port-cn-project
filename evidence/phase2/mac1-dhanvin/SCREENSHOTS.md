@@ -1,5 +1,7 @@
 # Dhanvin screenshot checklist
 
+> **Completed.** This was the capture checklist used during the session. All screenshots listed here were taken; Mac 1 screenshots 01–08 are redacted (ZeroTier network ID, device IDs, public IPs). Review: [`SCREENSHOT_REVIEW.md`](SCREENSHOT_REVIEW.md); final status: [`../README.md`](../README.md).
+
 Take screenshots only after the matching live test passes. Save them in this
 folder using the exact names below.
 

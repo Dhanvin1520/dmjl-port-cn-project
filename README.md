@@ -8,7 +8,7 @@ A client resolves `app.dmjl.test` through our private local DNS server, establis
 
 ---
 
-## 📑 Phase 1 Deliverables Index
+## Phase 1 Deliverables Index
 
 All deliverables specified in **Section 9** and **Section 6** of the Course Project specification are documented and linked below:
 
@@ -23,7 +23,7 @@ All deliverables specified in **Section 9** and **Section 6** of the Course Proj
 | **Course Topic Mapping** | [`docs/COURSE_TOPIC_MAPPING.md`](docs/COURSE_TOPIC_MAPPING.md) | Direct mapping of Section 6.1 lecture topics (TCP/IP, routing, transport ports, TLS, caching) to implementation code. |
 | **Evaluation Checklist** | [`docs/EVALUATION_CHECKLIST.md`](docs/EVALUATION_CHECKLIST.md) | 11-step demonstration walkthrough (Section 8) and 50-mark Review 1 rubric alignment. |
 
-## 🛡️ Phase 2 Deliverables Index (Harden & Recover)
+## Phase 2 Deliverables Index (Harden & Recover)
 
 Phase 2 ran on a private ZeroTier virtual LAN (`10.239.23.0/24`, approved by the faculty) because one member was out of station. All services still run on the four team laptops.
 
@@ -36,7 +36,7 @@ Phase 2 ran on a private ZeroTier virtual LAN (`10.239.23.0/24`, approved by the
 
 ---
 
-## 👥 Engineering Team · Section C
+## Engineering Team · Section C
 
 | Machine | Role | Name | GitHub Handle | Responsibility |
 |---|---|---|---|---|
@@ -47,7 +47,7 @@ Phase 2 ran on a private ZeroTier virtual LAN (`10.239.23.0/24`, approved by the
 
 ---
 
-## 🚀 How to Run the Backends
+## How to Run the Backends
 
 Python 3 standard library only (zero external package dependencies):
 
@@ -65,7 +65,7 @@ Both backend instances bind to `0.0.0.0`. Supported endpoints:
 
 ---
 
-## 🌐 Physical Network Topology
+## Physical Network Topology
 
 All four nodes operate on the local college LAN with strict LAN IP assignments. No external domains or cloud intermediaries are utilized.
 
@@ -111,7 +111,7 @@ flowchart TD
 
 ---
 
-## 🔄 End-to-End Request Lifecycle
+## End-to-End Request Lifecycle
 
 ```mermaid
 sequenceDiagram
@@ -149,7 +149,7 @@ sequenceDiagram
 
 ---
 
-## 📊 Protocol & OSI Layer Mapping
+## Protocol & OSI Layer Mapping
 
 | Layer (TCP/IP) | OSI Model | Protocol Employed | Platform Component | Concrete Evidence |
 |---|---|---|---|---|
@@ -162,17 +162,17 @@ sequenceDiagram
 
 ---
 
-## 🌟 Bonus Implementation: Visual Proof of TLS Termination
+## Bonus Implementation: Visual Proof of TLS Termination
 
 In production microservice architectures (e.g. AWS ALB to EC2), ingress traffic from clients across the WAN/LAN is secured with TLS, while internal communications between the load balancer and backend workers are offloaded to high-performance cleartext HTTP.
 
 Our capture in [`C_bonus_http.png`](evidence/ev_mac3/C_bonus_http.png) definitively demonstrates this:
-1. **Client to Edge (Mac 4 ➔ Mac 2):** Encrypted TLS 1.3 payload over port 443 (captured in `C3_tls.png`).
-2. **Edge to Backend (Mac 2 ➔ Mac 3):** Clean, unencrypted HTTP GET request over port 3001 captured live on Mac 3's Wi-Fi interface.
+1. **Client to Edge (Mac 4 → Mac 2):** Encrypted TLS 1.3 payload over port 443 (captured in `C3_tls.png`).
+2. **Edge to Backend (Mac 2 → Mac 3):** Clean, unencrypted HTTP GET request over port 3001 captured live on Mac 3's Wi-Fi interface.
 
 ---
 
-## 🛡️ High Availability & Automatic Failover (Option A)
+## High Availability & Automatic Failover (Option A)
 
 Our edge proxy is configured with active error interception and passive health check policies (`max_fails=1 fail_timeout=10s`):
 - **Normal State:** Requests cycle evenly: `A -> B -> A -> B -> A -> B` ([`D3_before.txt`](evidence/ev_mac4/D3_before.txt)).
@@ -183,14 +183,14 @@ Our edge proxy is configured with active error interception and passive health c
 
 ---
 
-## 📁 Repository & Evidence Index
+## Repository & Evidence Index
 
 All project evidence collected during the live multi-node session is archived in [`evidence/`](evidence/README.md):
 
 ```
 evidence/
 ├── README.md                      # Comprehensive form-to-evidence mapping table
-├── ev_mac1/                       # Node 1: Dhanvin Vadlamudi (Team Lead, DNS Authority)
+├── ev_mac1/                       # Node 1: Dhanvin Vadlamudi (Team Lead, Private DNS)
 │   ├── A1_mac1.txt                # Interface & IP configuration
 │   ├── A2_dnsmasq.txt             # Active dnsmasq runtime configuration
 │   ├── A5_pings_mac1.txt          # ICMP reachability verification (0.0% loss)
@@ -219,7 +219,13 @@ evidence/
     ├── D3_before.txt              # Pre-failure load balancing state
     ├── D3_layers.txt              # Verification of DNS & IP layers during backend fault
     ├── D3_after.txt               # Post-failure 100% failover to Backend B
-    └── D3_restored.txt            # Post-restoration recovery trace
+    ├── D3_restored.txt            # Post-restoration recovery trace
+├── failures/                      # Section 6.3: all five failure scenarios (F1–F5) + restoration
+└── phase2/                        # Phase 2 evidence (ZeroTier 10.239.23.0/24), see phase2/README.md
+    ├── mac1-dhanvin/              # Primary DNS, DNS cutover/restore, firewall client checks
+    ├── mac2-jagruthi/             # Primary nginx edge, trusted HTTPS, edge-allowed test, fresh client
+    ├── mac3-chaitanya/            # Backend A, standby edge, pf rules, phase2-capture.pcapng
+    └── mac4-lalith/               # Backend B, backup DNS, failover, firewall, TTL/flush timing
 wireshark/                         # Dedicated Wireshark DPI Gallery
 ├── README.md                      # Comprehensive DPI guide & visual screenshot gallery
 ├── dmjl_phase1_capture.pcapng     # Full live raw packet capture
@@ -227,12 +233,14 @@ wireshark/                         # Dedicated Wireshark DPI Gallery
 ├── C2_tcp.png                     # Wireshark TCP 3-way handshake (SYN, SYN-ACK, ACK)
 ├── C3_tls.png                     # Wireshark TLS Client/Server Hello & Cipher Suites
 ├── C3_cert.png                    # Wireshark TLS Certificate packet inspection
-└── C_bonus_http.png               # BONUS: Plaintext HTTP trace between edge & backend
+├── C_bonus_http.png               # BONUS: Plaintext HTTP trace between edge & backend
+├── dmjl_phase1_capture_v2_trusted.pcapng  # Re-capture after the client trusted the CA
+└── C3_tls_v2.png                  # Full TLS 1.3 handshake + encrypted request/response
 ```
 
 ---
 
-## 🛠️ Verification & Reproduction Commands
+## Verification & Reproduction Commands
 
 Clone this repository:
 ```bash

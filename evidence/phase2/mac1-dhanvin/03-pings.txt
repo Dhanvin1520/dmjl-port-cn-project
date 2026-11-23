@@ -21,3 +21,5 @@ round-trip min/avg/max/stddev = 61.110/123.521/241.394/72.753 ms
 
 Result: PASS for both currently authorized peers.
 Pending: Mac 1 to fourth-Mac ping after that device joins the network.
+
+Follow-up (21 Nov, later): the fourth Mac joined and the Mac 1 → Mac 4 ping passed — see 03-ping-mac1-to-mac4.txt and 03-pings.png.

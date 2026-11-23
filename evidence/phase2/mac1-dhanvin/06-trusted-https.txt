@@ -20,3 +20,5 @@ edge-leaf.pem: OK
 
 Result: PASS with explicit project CA. System-wide CA trust installation on
 this Mac remains pending.
+
+Follow-up (21 Nov, later): system-wide CA trust was installed with dns/setup-phase2-client.command; trusted HTTPS without --cacert or -k returned HTTP 200 — see 06-trusted-https.png.
