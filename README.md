@@ -13,7 +13,8 @@ A client resolves `app.dmjl.test` through our private local DNS server, establis
 | Deliverable | Path |
 |---|---|
 | **Final Report — Phase 1 + Phase 2 (PDF)** | [`report/dmjl_port_Final_Report.pdf`](report/dmjl_port_Final_Report.pdf) |
-| **Presentation (PPTX)** | [`report/dmjl_port_Presentation.pptx`](report/dmjl_port_Presentation.pptx) |
+| **Presentation (5 slides)** | [`report/dmjl_port_Presentation.pptx`](report/dmjl_port_Presentation.pptx) |
+| **Detailed backup deck (15 slides)** | [`report/dmjl_port_Presentation_Detailed.pptx`](report/dmjl_port_Presentation_Detailed.pptx) |
 
 The combined report covers both phases, including a failure-by-failure comparison of what Phase 2 improved. See [`report/README.md`](report/README.md).
 
@@ -247,7 +248,8 @@ wireshark/                         # Dedicated Wireshark DPI Gallery
 └── C3_tls_v2.png                  # Full TLS 1.3 handshake + encrypted request/response
 report/                            # Final submission
 ├── dmjl_port_Final_Report.pdf     # Combined Phase 1 + Phase 2 report
-└── dmjl_port_Presentation.pptx    # Presentation slides
+├── dmjl_port_Presentation.pptx    # Presentation (5 slides)
+└── dmjl_port_Presentation_Detailed.pptx  # Detailed backup deck (15 slides)
 ```
 
 ---
